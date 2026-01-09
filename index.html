@@ -174,24 +174,19 @@ iframe{
 const precio=500;
 let cantidad=1;
 function actualizar(){
-  document.getElementById("cantidad").innerText = cantidad;
-  document.getElementById("total").innerText =
-    "TOTAL BOLSAS: $" + (cantidad * precio);
-}
+  const delivery=parseInt(document.getElementById("zona").value);
+  document.getElementById("cantidad").innerText=cantidad;
+  document.getElementById("total").innerText=
+    "TOTAL A PAGAR: $"+(cantidad*precio+delivery);
 }
 function mas(){cantidad++;actualizar();}
 function menos(){if(cantidad>1){cantidad--;actualizar();}}
 function whatsapp(){
-  const msg =
+  const msg=
   `Hola, quiero comprar hielo Torres Ice.
 Cantidad: ${cantidad} bolsa(s)
-Total bolsas: $${cantidad * precio}
-Delivery: a coordinar según zona`;
-
-  window.open(
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msg)
-  );
-}
+Total: $${cantidad*precio+parseInt(zona.value)}`;
+  window.open("https://wa.me/56927731874?text="+encodeURIComponent(msg));
 }
 actualizar();
 </script>
