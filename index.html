@@ -1,244 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Torres Ice | Venta de Hielo en Copiapó</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Torres Ice – Venta de Hielo en Copiapó</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<style>
-:root{
-  --azul:#0ea5e9;
-  --celeste:#38bdf8;
-  --verde:#22c55e;
-  --blanco:#ffffff;
-  --oscuro:#0f172a;
-  --sombra:0 25px 45px rgba(0,0,0,.35);
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-*{
-  box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("fondo-hielo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
 
-/* 🔥 FIX COMPLETO PARA CENTRAR SIEMPRE */
-html, body {
-  width: 100%;
-  height: 100%;
-}
+    .card {
+      background: white;
+      width: 100%;
+      max-width: 420px;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
 
-body {
-  margin:0;
-  padding:0;
+    h1 {
+      text-align: center;
+      color: #0284c7;
+      margin-bottom: 5px;
+    }
 
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:center;
+    h2 {
+      text-align: center;
+      font-size: 15px;
+      margin-top: 0;
+      color: #444;
+    }
 
-  min-height:100%;
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-  background-image: url("fondo-hielo.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
 
-/* TARJETA */
-.card{
-  background:var(--blanco);
-  width:100%;
-  max-width:460px;
-  border-radius:20px;
-  box-shadow:var(--sombra);
-  padding:26px;
-  text-align:center;
+    .total {
+      margin-top: 18px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      color: #0369a1;
+    }
 
-  margin-bottom:40px;
-}
+    button {
+      width: 100%;
+      margin-top: 14px;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-/* ENCABEZADO */
-.logo{
-  font-size:28px;
-  font-weight:bold;
-  color:var(--azul);
-}
-.sub{
-  font-size:14px;
-  color:#555;
-  margin-top:6px;
-}
+    .whatsapp {
+      background: #25d366;
+      color: white;
+    }
 
-/* PRODUCTO */
-.product-title{
-  margin-top:22px;
-  font-size:22px;
-}
-.price{
-  font-size:26px;
-  color:var(--verde);
-  margin:8px 0;
-}
+    .pago {
+      background: #0284c7;
+      color: white;
+    }
 
-/* CANTIDAD */
-.qty{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  margin:14px 0;
-}
-.qty button{
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:12px;
-  font-size:22px;
-  background:var(--azul);
-  color:#fff;
-  cursor:pointer;
-}
-.qty input{
-  width:70px;
-  text-align:center;
-  font-size:18px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:6px;
-}
-
-/* FORMULARIO */
-input, textarea{
-  width:100%;
-  padding:11px;
-  margin-top:9px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  font-size:14px;
-}
-
-/* TOTAL */
-.total{
-  font-size:18px;
-  margin:14px 0;
-  font-weight:bold;
-}
-
-/* BOTONES */
-.btn{
-  width:100%;
-  padding:15px;
-  border:none;
-  border-radius:16px;
-  font-size:16px;
-  color:#fff;
-  cursor:pointer;
-  margin-top:12px;
-}
-.btn-mp{
-  background:linear-gradient(135deg,#0ea5e9,#0284c7);
-}
-.btn-wsp{
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-}
-
-/* PIE */
-.footer{
-  margin-top:14px;
-  font-size:13px;
-  color:#555;
-}
-</style>
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 22px;
+      }
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div style="
-  text-align:center;
-  padding:60px 15px 20px;
-  color:white;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.8);
-  width:100%;
-">
-  <h1 style="font-size:2.5rem;margin-bottom:10px;">
-    TORRES ICE - VENTA DE HIELO
-  </h1>
-  <p style="font-size:1.2rem;">
-    Bolsas de 1 Kg · Copiapó
-  </p>
-</div>
-
 <div class="card">
-  <div class="logo">🧊 Torres Ice 🧊</div>
-  <div class="sub">Venta de Hielo · Copiapó</div>
+  <h1>Torres Ice</h1>
+  <h2>Venta de hielo en Copiapó</h2>
 
-  <div class="product-title">Bolsa de Hielo</div>
-  <div>Formato: 1 Kg</div>
-  <div class="price">$500 c/u</div>
+  <label>Nombre del cliente</label>
+  <input type="text" id="nombre" placeholder="Ej: Juan Pérez">
 
-  <!-- CANTIDAD -->
-  <div class="qty">
-    <button onclick="cambiarCantidad(-1)">−</button>
-    <input id="cantidad" type="number" value="1" min="1">
-    <button onclick="cambiarCantidad(1)">+</button>
-  </div>
+  <label>N° de celular</label>
+  <input type="tel" id="telefono" placeholder="+56 9 1234 5678">
 
-  <!-- TOTAL -->
-  <div class="total">
-    Total: $<span id="total">500</span>
-  </div>
+  <label>Dirección para delivery</label>
+  <input type="text" id="direccion" placeholder="Ej: Av. Copayapu 123">
 
-  <!-- DATOS DELIVERY -->
-  <input id="nombre" type="text" placeholder="Nombre del cliente">
-  <input id="direccion" type="text" placeholder="Dirección de entrega">
-  <textarea id="referencia" rows="2" placeholder="Referencia (opcional)"></textarea>
+  <label>Cantidad de bolsas (1 Kg c/u)</label>
+  <select id="cantidad" onchange="calcular()">
+    <option value="1">1 bolsa</option>
+    <option value="2">2 bolsas</option>
+    <option value="3">3 bolsas</option>
+    <option value="4">4 bolsas</option>
+    <option value="5">5 bolsas</option>
+    <option value="10">10 bolsas</option>
+  </select>
 
-  <!-- BOTONES -->
-  <button class="btn btn-mp" onclick="pagarMP()">💳 Pagar con Mercado Pago</button>
-  <button class="btn btn-wsp" onclick="pedirWhatsApp()">📲 Pedir por WhatsApp</button>
+  <div class="total" id="total">Total: $500</div>
 
-  <div class="footer">📍 Copiapó · Delivery local</div>
+  <button class="whatsapp" onclick="enviarWhatsapp()">Pedir por WhatsApp</button>
+  <button class="pago" onclick="pagar()">Pagar con Mercado Pago</button>
 </div>
 
 <script>
-const precio = 500;
-const whatsapp = "56927731874";
-const linkMP = "https://link.mercadopago.cl/torresice";
+  const precio = 500;
 
-function cambiarCantidad(n){
-  const c = document.getElementById("cantidad");
-  let v = parseInt(c.value) + n;
-  if(v < 1) v = 1;
-  c.value = v;
-  actualizarTotal();
-}
+  function calcular() {
+    const cant = document.getElementById("cantidad").value;
+    document.getElementById("total").innerText =
+      "Total: $" + (cant * precio);
+  }
 
-function actualizarTotal(){
-  const c = document.getElementById("cantidad").value;
-  document.getElementById("total").innerText = c * precio;
-}
-document.getElementById("cantidad").addEventListener("input", actualizarTotal);
+  function enviarWhatsapp() {
+    const nombre = document.getElementById("nombre").value;
+    const telefono = document.getElementById("telefono").value;
+    const direccion = document.getElementById("direccion").value;
+    const cant = document.getElementById("cantidad").value;
+    const total = cant * precio;
 
-function pagarMP(){
-  window.open(linkMP, "_blank");
-}
+    const mensaje =
+      `Hola, quiero comprar hielo Torres Ice en Copiapó.\n` +
+      `Nombre: ${nombre}\n` +
+      `Teléfono: ${telefono}\n` +
+      `Dirección: ${direccion}\n` +
+      `Cantidad: ${cant} bolsa(s)\n` +
+      `Total: $${total}`;
 
-function pedirWhatsApp(){
-  const c = document.getElementById("cantidad").value;
-  const total = c * precio;
-  const nombre = document.getElementById("nombre").value || "No indicado";
-  const direccion = document.getElementById("direccion").value || "No indicada";
-  const ref = document.getElementById("referencia").value || "Sin referencia";
+    const url = `https://wa.me/56927731874?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+  }
 
-  const mensaje =
-`Hola, quiero comprar ${c} bolsa(s) de hielo Torres Ice en Copiapó.
-Total $${total}
-
-Nombre: ${nombre}
-Dirección: ${direccion}
-Referencia: ${ref}`;
-
-  window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(mensaje)}`, "_blank");
-}
+  function pagar() {
+    window.open("https://link.mercadopago.cl/torresice", "_blank");
+  }
 </script>
 
 </body>
