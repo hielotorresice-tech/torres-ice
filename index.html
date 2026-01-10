@@ -151,9 +151,11 @@ iframe{
 
     <label>Zona de entrega</label>
     <select id="zona" onchange="actualizar()">
-      <option value="1000">Copiapó Centro ($1.000)</option>
-      <option value="1500">Otros sectores ($1.500)</option>
-    </select>
+  <option value="centro">Copiapó Centro ($1.000 · Gratis desde 10 bolsas)</option>
+  <option value="alrededores">Copiapó Alrededores ($1.500 · Gratis desde 15 bolsas)</option>
+  <option value="paipote">Paipote ($2.000 · Gratis desde 20 bolsas)</option>
+  <option value="tierra">Tierra Amarilla ($2.500 · Gratis desde 25 bolsas)</option>
+</select>
   </div>
 
   <!-- BOTONES -->
@@ -174,10 +176,31 @@ iframe{
 const precio = 500;
 let cantidad = 1;
 
+const deliveryConfig = {
+  centro: { costo: 1000, gratis: 10 },
+  alrededores: { costo: 1500, gratis: 15 },
+  paipote: { costo: 2000, gratis: 20 },
+  tierra: { costo: 2500, gratis: 25 }
+};
+
 function actualizar(){
+  const zona = document.getElementById("zona").value;
+  const config = deliveryConfig[zona];
+
+  const subtotal = cantidad * precio;
+  let delivery = config.costo;
+
+  if (cantidad >= config.gratis) {
+    delivery = 0;
+  }
+
+  const total = subtotal + delivery;
+
   document.getElementById("cantidad").innerText = cantidad;
-  document.getElementById("total").innerText =
-    "TOTAL BOLSAS: $" + (cantidad * precio);
+  document.getElementById("total").innerHTML =
+    `Subtotal bolsas: $${subtotal}<br>` +
+    `Delivery: $${delivery}<br>` +
+    `<strong>TOTAL FINAL: $${total}</strong>`;
 }
 
 function mas(){
@@ -193,14 +216,21 @@ function menos(){
 }
 
 function whatsapp(){
-  const zonaTexto = document.getElementById("zona").selectedOptions[0].text;
+  const zonaSelect = document.getElementById("zona");
+  const zonaTexto = zonaSelect.options[zonaSelect.selectedIndex].text;
+
+  const config = deliveryConfig[zonaSelect.value];
+  const subtotal = cantidad * precio;
+  const delivery = (cantidad >= config.gratis) ? 0 : config.costo;
+  const total = subtotal + delivery;
 
   const msg =
-  `Hola, quiero comprar hielo Torres Ice.
+`Hola, quiero comprar hielo Torres Ice.
 Cantidad: ${cantidad} bolsa(s)
-Total bolsas: $${cantidad * precio}
+Subtotal bolsas: $${subtotal}
+Delivery: $${delivery}
 Zona: ${zonaTexto}
-Delivery: a coordinar`;
+TOTAL FINAL: $${total}`;
 
   window.open(
     "https://wa.me/56927731874?text=" + encodeURIComponent(msg),
