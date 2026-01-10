@@ -183,16 +183,20 @@ function actualizar(){
   document.getElementById("delivery").innerText = delivery;
   document.getElementById("total").innerText = subtotal + delivery;
 
-  let msg = `Hola quiero comprar ${cantidad} bolsa(s) de hielo Torres Ice en Copiapó.
+  let msg =
+`Hola quiero comprar ${cantidad} bolsa(s) de hielo Torres Ice en Copiapó.
+
+Nombre: ${nombre}
+Teléfono: ${fono}
+Dirección: ${direccion}
+Zona: ${zonaTxt}
+
 Subtotal: $${subtotal}
 Delivery: $${delivery}
-Total: $${subtotal+delivery}
+Total: $${subtotal + delivery}`;
 
-Nombre: ${nombre.value}
-Dirección: ${direccion.value}`;
-
-  document.getElementById("wp").href =
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
+document.getElementById("wp").href =
+  "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
 actualizar();
