@@ -138,6 +138,16 @@ iframe{
     <div class="total" id="total">TOTAL A PAGAR: $1.500</div>
   </div>
 
+  <!-- ZONA DE ENTREGA -->
+  <label>Zona de entrega</label>
+    <select id="zona" onchange="actualizar()">
+  <option value="centro">Copiapó Centro ($1.000 · Gratis desde 10 bolsas)</option>
+  <option value="alrededores">Copiapó Alrededores ($1.500 · Gratis desde 15 bolsas)</option>
+  <option value="paipote">Paipote ($2.000 · Gratis desde 20 bolsas)</option>
+  <option value="tierra">Tierra Amarilla ($2.500 · Gratis desde 25 bolsas)</option>
+</select>
+  </div>
+  
   <!-- DATOS -->
   <div class="section">
     <label>Nombre del cliente</label>
@@ -148,16 +158,7 @@ iframe{
 
     <label>Dirección para delivery</label>
     <input id="direccion">
-
-    <label>Zona de entrega</label>
-    <select id="zona" onchange="actualizar()">
-  <option value="centro">Copiapó Centro ($1.000 · Gratis desde 10 bolsas)</option>
-  <option value="alrededores">Copiapó Alrededores ($1.500 · Gratis desde 15 bolsas)</option>
-  <option value="paipote">Paipote ($2.000 · Gratis desde 20 bolsas)</option>
-  <option value="tierra">Tierra Amarilla ($2.500 · Gratis desde 25 bolsas)</option>
-</select>
-  </div>
-
+    
   <!-- BOTONES -->
   <button class="main whatsapp" onclick="whatsapp()">📱 Pedir por WhatsApp</button>
   <button class="main llamar" onclick="location.href='tel:+56927731874'">📞 Llamar ahora</button>
@@ -185,22 +186,22 @@ const deliveryConfig = {
 
 function actualizar(){
   const zona = document.getElementById("zona").value;
-  const config = deliveryConfig[zona];
-
   const subtotal = cantidad * precio;
-  let delivery = config.costo;
 
-  if (cantidad >= config.gratis) {
-    delivery = 0;
+  let delivery = 0;
+
+  if (zona !== "") {
+    const config = deliveryConfig[zona];
+    delivery = (cantidad >= config.gratis) ? 0 : config.costo;
   }
 
   const total = subtotal + delivery;
 
   document.getElementById("cantidad").innerText = cantidad;
   document.getElementById("total").innerHTML =
-    `Subtotal bolsas: $${subtotal}<br>` +
-    `Delivery: $${delivery}<br>` +
-    `<strong>TOTAL FINAL: $${total}</strong>`;
+    `Subtotal bolsas: $${subtotal}<br>
+     Delivery: $${delivery}<br>
+     <strong>TOTAL FINAL: $${total}</strong>`;
 }
 
 function mas(){
