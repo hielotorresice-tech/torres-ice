@@ -184,24 +184,29 @@ const deliveryConfig = {
   tierra: { costo: 2500, gratis: 25 }
 };
 
-function actualizar(){
+function actualizar() {
   const zona = document.getElementById("zona").value;
-  const subtotal = cantidad * precio;
 
+  const subtotal = cantidad * precio;
   let delivery = 0;
 
   if (zona !== "") {
     const config = deliveryConfig[zona];
-    delivery = (cantidad >= config.gratis) ? 0 : config.costo;
+
+    if (cantidad >= config.gratis) {
+      delivery = 0;
+    } else {
+      delivery = config.costo;
+    }
   }
 
   const total = subtotal + delivery;
 
+  // Actualizar SOLO números (no estructura)
   document.getElementById("cantidad").innerText = cantidad;
-  document.getElementById("total").innerHTML =
-    `Subtotal bolsas: $${subtotal}<br>
-     Delivery: $${delivery}<br>
-     <strong>TOTAL FINAL: $${total}</strong>`;
+  document.getElementById("subtotal").innerText = `$${subtotal}`;
+  document.getElementById("delivery").innerText = `$${delivery}`;
+  document.getElementById("total").innerText = `$${total}`;
 }
 
 function mas(){
