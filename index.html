@@ -199,6 +199,17 @@ document.getElementById("wp").href =
   "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
+function enviarWhatsApp(){
+  let url = document.getElementById("wp").href;
+
+  if(url.includes("#")){
+    alert("Seleccione zona y cantidad antes de pedir por WhatsApp");
+    return;
+  }
+
+  window.open(url, "_blank");
+}
+  
 actualizar();
 </script>
 
