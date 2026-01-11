@@ -104,6 +104,17 @@ h1{
       <div class="line">Subtotal bolsas: $<span id="subtotal">500</span></div>
       <div class="line">Delivery: $<span id="delivery">1000</span></div>
       <div class="line total">TOTAL A PAGAR: $<span id="total">1500</span></div>
+      <div style="margin-top:15px;">
+  <select id="zona" onchange="actualizar()" style="width:100%; padding:10px; border-radius:8px;">
+    <option value="">Seleccione zona de entrega</option>
+    <option value="centro">Copiapó Centro (Gratis desde 10 bolsas)</option>
+    <option value="alrededores">Copiapó Alrededores (Gratis desde 15 bolsas)</option>
+    <option value="paipote">Paipote (Gratis desde 20 bolsas)</option>
+    <option value="tamarilla">Tierra Amarilla (Gratis desde 25 bolsas)</option>
+    <option value="retiro">Retiro en local</option>
+  </select>
+</div>
+
     </div>
 
   </div>
