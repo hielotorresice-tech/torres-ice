@@ -123,7 +123,14 @@ h1{
 <script>
 let precio = 500;
 let cantidad = 1;
-let costoDelivery = 1000; // por ahora fijo
+
+const deliveryConfig = {
+  centro:{costo:1000, gratis:10},
+  alrededores:{costo:1500, gratis:15},
+  paipote:{costo:2000, gratis:20},
+  tamarilla:{costo:2500, gratis:25},
+  retiro:{costo:0, gratis:0}
+};
 
 function cambiar(v){
   cantidad += v;
@@ -133,11 +140,19 @@ function cambiar(v){
 
 function actualizar(){
   let subtotal = cantidad * precio;
-  let total = subtotal + costoDelivery;
+  let zona = document.getElementById("zona").value;
+  let delivery = 0;
+
+  if(zona){
+    let z = deliveryConfig[zona];
+    if(cantidad < z.gratis) delivery = z.costo;
+  }
+
+  let total = subtotal + delivery;
 
   document.getElementById("cantidad").innerText = cantidad;
   document.getElementById("subtotal").innerText = subtotal;
-  document.getElementById("delivery").innerText = costoDelivery;
+  document.getElementById("delivery").innerText = delivery;
   document.getElementById("total").innerText = total;
 }
 
