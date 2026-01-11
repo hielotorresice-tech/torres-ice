@@ -14,8 +14,9 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
+}
 
-  .app{
+.app{
   width:100%;
   max-width:420px;
   background:white;
@@ -25,38 +26,8 @@ body{
   text-align:center;
 }
 
-}
-
-.container{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.card{
-  background:white;
-  width:100%;
-  max-width:420px;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 0 15px rgba(0,0,0,0.2);
-  text-align:center;
-}
-
-h1{
-  margin:5px 0;
-  color:#0077cc;
-}
-
-.sub{
-  color:#555;
-  font-size:14px;
-}
-
-.product{
-  margin-top:20px;
-}
+h1{color:#0077cc;margin:5px 0;}
+.sub{color:#555;font-size:14px;}
 
 .qty{
   display:flex;
@@ -66,73 +37,82 @@ h1{
 }
 
 .qty button{
-  width:40px;
-  height:40px;
-  font-size:20px;
-  border:none;
-  background:#0077cc;
-  color:white;
+  width:40px;height:40px;font-size:20px;
+  border:none;background:#0077cc;color:white;
   border-radius:50%;
-  cursor:pointer;
 }
 
-.qty span{
-  width:60px;
-  font-size:20px;
-  text-align:center;
+.qty span{width:60px;font-size:20px;}
+
+.line{margin:6px 0;}
+.total{color:red;font-size:20px;font-weight:bold;}
+
+select,input{
+  width:100%;padding:10px;margin-top:10px;
+  border-radius:8px;border:1px solid #ccc;
 }
 
-.line{
-  margin:8px 0;
+.btn{
+  display:block;
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  text-decoration:none;
   font-size:16px;
 }
 
-.total{
-  color:red;
-  font-size:20px;
-  font-weight:bold;
-}
+.whatsapp{background:#25D366;color:white;}
+.call{background:#0077cc;color:white;}
+.mp{background:#009ee3;color:white;}
 </style>
-
 </head>
 
-<body class="fondo">
+<body>
 
-<div class="container">
-  <div class="app">
+<div class="app">
 
-    <h1>🧊 Torres Ice 🧊</h1>
-    <div class="sub">Venta de Hielo · Copiapó</div>
-    <div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
+<h1>🧊 Torres Ice 🧊</h1>
+<div class="sub">Venta de Hielo · Copiapó</div>
+<div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
 
-    <div class="product">
-      <h3>Bolsa de Hielo</h3>
-      <p>Formato: 1 Kg</p>
-      <p>Precio unitario: <strong>$500</strong></p>
+<h3>Bolsa de Hielo</h3>
+<div>Formato: 1 Kg</div>
+<div><strong>Precio unitario: $500</strong></div>
 
-      <div class="qty">
-        <button onclick="cambiar(-1)">−</button>
-        <span id="cantidad">1</span>
-        <button onclick="cambiar(1)">+</button>
-      </div>
-
-      <div class="line">Subtotal bolsas: $<span id="subtotal">500</span></div>
-      <div class="line">Delivery: $<span id="delivery">1000</span></div>
-      <div class="line total">TOTAL A PAGAR: $<span id="total">1500</span></div>
-      <div style="margin-top:15px;">
-  <select id="zona" onchange="actualizar()" style="width:100%; padding:10px; border-radius:8px;">
-    <option value="">Seleccione zona de entrega</option>
-    <option value="centro">Copiapó Centro (Gratis desde 10 bolsas)</option>
-    <option value="alrededores">Copiapó Alrededores (Gratis desde 15 bolsas)</option>
-    <option value="paipote">Paipote (Gratis desde 20 bolsas)</option>
-    <option value="tamarilla">Tierra Amarilla (Gratis desde 25 bolsas)</option>
-    <option value="retiro">Retiro en local</option>
-  </select>
+<div class="qty">
+  <button onclick="cambiar(-1)">−</button>
+  <span id="cantidad">1</span>
+  <button onclick="cambiar(1)">+</button>
 </div>
 
-    </div>
+<div class="line">Subtotal: $<span id="subtotal">500</span></div>
+<div class="line">Delivery: $<span id="delivery">0</span></div>
+<div class="line total">TOTAL: $<span id="total">500</span></div>
 
-  </div>
+<select id="zona" onchange="actualizar()">
+  <option value="">Seleccione zona de entrega</option>
+  <option value="centro">Copiapó Centro (Gratis desde 10)</option>
+  <option value="alrededores">Alrededores (Gratis desde 15)</option>
+  <option value="paipote">Paipote (Gratis desde 20)</option>
+  <option value="tamarilla">Tierra Amarilla (Gratis desde 25)</option>
+  <option value="retiro">Retiro en local</option>
+</select>
+
+<a id="wp" class="btn whatsapp" onclick="armarWhatsApp()" target="_blank">
+📱 Pedir por WhatsApp
+</a>
+
+<a class="btn call" href="tel:+56927731874">📞 Llamar ahora</a>
+
+<a class="btn mp" href="https://link.mercadopago.cl/torresice" target="_blank">
+💳 Pagar con Mercado Pago
+</a>
+
+<div style="margin-top:15px;font-size:13px;">
+📍 Miguel Gallo 1157, Copiapó<br>
+🚚 Delivery Local · Atención directa por WhatsApp
+</div>
+
 </div>
 
 <script>
@@ -169,6 +149,31 @@ function actualizar(){
   document.getElementById("subtotal").innerText = subtotal;
   document.getElementById("delivery").innerText = delivery;
   document.getElementById("total").innerText = total;
+}
+
+function armarWhatsApp(){
+  let zona = document.getElementById("zona").value || "No indicada";
+  let subtotal = cantidad * precio;
+  let delivery = 0;
+
+  if(zona && deliveryConfig[zona]){
+    let z = deliveryConfig[zona];
+    if(cantidad < z.gratis) delivery = z.costo;
+  }
+
+  let total = subtotal + delivery;
+
+  let msg =
+`Hola, quiero pedir hielo Torres Ice.
+
+Cantidad: ${cantidad} bolsas (1 Kg c/u)
+Precio unitario: $500
+Zona: ${zona}
+Delivery: $${delivery}
+Total: $${total}`;
+
+  document.getElementById("wp").href =
+    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
 actualizar();
