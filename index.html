@@ -9,8 +9,8 @@ body{
   margin:0;
   min-height:100vh;
   font-family: Arial, sans-serif;
-  background: url("fondo-hielo.jpg") no-repeat center center fixed;
-  background-size: cover;
+  background:url("fondo-hielo.jpg") no-repeat center center fixed;
+  background-size:cover;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -22,12 +22,23 @@ body{
   background:white;
   border-radius:20px;
   padding:25px;
-  box-shadow:0 10px 40px rgba(0,0,0,.25);
+  box-shadow:0 10px 40px rgba(0,0,0,.3);
   text-align:center;
 }
 
-h1{color:#0077cc;margin:5px 0;}
-.sub{color:#555;font-size:14px;}
+h1{
+  margin:5px 0;
+  color:#0077cc;
+}
+
+.sub{
+  color:#555;
+  font-size:14px;
+}
+
+.product{
+  margin-top:20px;
+}
 
 .qty{
   display:flex;
@@ -37,111 +48,134 @@ h1{color:#0077cc;margin:5px 0;}
 }
 
 .qty button{
-  width:40px;height:40px;font-size:20px;
-  border:none;background:#0077cc;color:white;
+  width:40px;
+  height:40px;
+  font-size:20px;
+  border:none;
+  background:#0077cc;
+  color:white;
   border-radius:50%;
+  cursor:pointer;
 }
 
-.qty span{width:60px;font-size:20px;}
-
-.line{margin:6px 0;}
-.total{color:red;font-size:20px;font-weight:bold;}
-
-select,input{
-  width:100%;padding:10px;margin-top:10px;
-  border-radius:8px;border:1px solid #ccc;
+.qty span{
+  width:60px;
+  font-size:20px;
+  text-align:center;
 }
 
-.btn{
-  display:block;
-  margin-top:12px;
-  padding:12px;
-  border-radius:10px;
-  text-decoration:none;
+.line{
+  margin:6px 0;
   font-size:16px;
 }
 
-.whatsapp{background:#25D366;color:white;}
-.call{background:#0077cc;color:white;}
-.mp{background:#009ee3;color:white;}
+.total{
+  color:#d00;
+  font-size:20px;
+  font-weight:bold;
+}
+
+select,input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-top:10px;
+}
+
+.transfer{
+  margin-top:15px;
+  padding:12px;
+  border:1px dashed #0077cc;
+  border-radius:10px;
+  font-size:14px;
+}
+
+button.copy{
+  margin-top:8px;
+  padding:10px;
+  width:100%;
+  border:none;
+  background:#0077cc;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.whatsapp{
+  display:block;
+  margin-top:15px;
+  padding:12px;
+  background:#25D366;
+  color:white;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
 <div class="app">
+  <h1>🧊 Torres Ice 🧊</h1>
+  <div class="sub">Venta de Hielo · Copiapó</div>
+  <div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
 
-<h1>🧊 Torres Ice 🧊</h1>
-<div class="sub">Venta de Hielo · Copiapó</div>
-<div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
+  <div class="product">
+    <h3>Bolsa de Hielo</h3>
+    <p>Formato: 1 Kg</p>
+    <p>Precio unitario: <strong>$500</strong></p>
 
-<h3>Bolsa de Hielo</h3>
-<div>Formato: 1 Kg</div>
-<div><strong>Precio unitario: $500</strong></div>
+    <div class="qty">
+      <button onclick="cambiar(-1)">−</button>
+      <span id="cantidad">1</span>
+      <button onclick="cambiar(1)">+</button>
+    </div>
 
-<div class="qty">
-  <button onclick="cambiar(-1)">−</button>
-  <span id="cantidad">1</span>
-  <button onclick="cambiar(1)">+</button>
+    <div class="line">Subtotal: $<span id="subtotal">500</span></div>
+    <div class="line">Delivery: $<span id="delivery">0</span></div>
+    <div class="line total">Total: $<span id="total">500</span></div>
+
+    <select id="zona" onchange="actualizar()">
+      <option value="">Seleccione zona</option>
+      <option value="centro">Copiapó Centro (Gratis desde 10)</option>
+      <option value="alrededores">Copiapó Alrededores (Gratis desde 15)</option>
+      <option value="paipote">Paipote (Gratis desde 20)</option>
+      <option value="tamarilla">Tierra Amarilla (Gratis desde 25)</option>
+      <option value="retiro">Retiro en local</option>
+    </select>
+
+    <div class="transfer">
+      <strong>Pago por Transferencia</strong><br>
+      Banco: COOPEUCH<br>
+      Tipo: Cuenta Vista<br>
+      Cuenta: 251105735<br>
+      RUT: 12.218.473-0<br>
+      Nombre: Oscar Ernesto Torres López
+      <button class="copy" onclick="copiar()">📋 Copiar datos</button>
+    </div>
+
+    <a id="wp" class="whatsapp" target="_blank">📱 Enviar pedido por WhatsApp</a>
+  </div>
 </div>
 
-<div class="line">Subtotal: $<span id="subtotal">500</span></div>
-<div class="line">Delivery: $<span id="delivery">0</span></div>
-<div class="line total">TOTAL: $<span id="total">500</span></div>
-
-<select id="zona" onchange="actualizar()">
-  <option value="">Seleccione zona de entrega</option>
-  <option value="centro">Copiapó Centro (Gratis desde 10)</option>
-  <option value="alrededores">Alrededores (Gratis desde 15)</option>
-  <option value="paipote">Paipote (Gratis desde 20)</option>
-  <option value="tamarilla">Tierra Amarilla (Gratis desde 25)</option>
-  <option value="retiro">Retiro en local</option>
-</select>
-
-<a id="wp" class="btn whatsapp" onclick="armarWhatsApp()" target="_blank">
-📱 Pedir por WhatsApp
-</a>
-
-<a class="btn call" href="tel:+56927731874">📞 Llamar ahora</a>
-
-<a class="btn mp" href="https://link.mercadopago.cl/torresice" target="_blank">
-💳 Pagar con Mercado Pago
-</a>
-
-<div style="margin-top:15px;font-size:13px;">
-📍 Miguel Gallo 1157, Copiapó<br>
-🚚 Delivery Local · Atención directa por WhatsApp
-</div>
-
-</div>
-
-function copiarDatos(){
-  const texto = 
-`Banco: COOPEUCH
-Tipo: Cuenta Vista
-Cuenta: 251105735
-RUT: 12.218.473-0
-Nombre: Oscar Ernesto Torres López`;
-
-  navigator.clipboard.writeText(texto);
-  alert("Datos copiados. Péguelos en su banco para transferir.");
-}
-  
 <script>
 let precio = 500;
 let cantidad = 1;
 
 const deliveryConfig = {
-  centro:{costo:1000, gratis:10},
-  alrededores:{costo:1500, gratis:15},
-  paipote:{costo:2000, gratis:20},
-  tamarilla:{costo:2500, gratis:25},
-  retiro:{costo:0, gratis:0}
+  centro:{costo:1000,gratis:10},
+  alrededores:{costo:1500,gratis:15},
+  paipote:{costo:2000,gratis:20},
+  tamarilla:{costo:2500,gratis:25},
+  retiro:{costo:0,gratis:0}
 };
 
 function cambiar(v){
   cantidad += v;
-  if(cantidad < 1) cantidad = 1;
+  if(cantidad<1) cantidad=1;
   actualizar();
 }
 
@@ -161,46 +195,33 @@ function actualizar(){
   document.getElementById("subtotal").innerText = subtotal;
   document.getElementById("delivery").innerText = delivery;
   document.getElementById("total").innerText = total;
-}
 
-<div class="transferencia">
-  <h3>💳 Pago por Transferencia</h3>
-  <p>Transfiere el total y envía el comprobante por WhatsApp.</p>
-
-  <div class="datos">
-    <p><strong>Banco:</strong> COOPEUCH</p>
-    <p><strong>Tipo de cuenta:</strong> Vista</p>
-    <p><strong>N° de cuenta:</strong> <span id="cta">251105735</span></p>
-    <p><strong>RUT:</strong> 12.218.473-0</p>
-    <p><strong>Nombre:</strong> Oscar Ernesto Torres López</p>
-
-    <button onclick="copiarDatos()">📋 Copiar datos</button>
-  </div>
-</div>
-  
-function armarWhatsApp(){
-  let zona = document.getElementById("zona").value || "No indicada";
-  let subtotal = cantidad * precio;
-  let delivery = 0;
-
-  if(zona && deliveryConfig[zona]){
-    let z = deliveryConfig[zona];
-    if(cantidad < z.gratis) delivery = z.costo;
-  }
-
-  let total = subtotal + delivery;
+  let zonaTxt = zona ? document.getElementById("zona").options[document.getElementById("zona").selectedIndex].text : "No definida";
 
   let msg =
 `Hola, quiero pedir hielo Torres Ice.
 
-Cantidad: ${cantidad} bolsas (1 Kg c/u)
-Precio unitario: $500
-Zona: ${zona}
+Cantidad: ${cantidad} bolsa(s)
+Zona: ${zonaTxt}
+Subtotal: $${subtotal}
 Delivery: $${delivery}
-Total: $${total}`;
+Total: $${total}
+
+Ya realicé la transferencia y adjunto comprobante.`;
 
   document.getElementById("wp").href =
     "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
+}
+
+function copiar(){
+  navigator.clipboard.writeText(
+`Banco: COOPEUCH
+Cuenta Vista
+N° 251105735
+RUT 12.218.473-0
+Oscar Ernesto Torres López`
+  );
+  alert("Datos copiados");
 }
 
 actualizar();
