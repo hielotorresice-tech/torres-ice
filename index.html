@@ -115,6 +115,18 @@ select,input{
 
 </div>
 
+function copiarDatos(){
+  const texto = 
+`Banco: COOPEUCH
+Tipo: Cuenta Vista
+Cuenta: 251105735
+RUT: 12.218.473-0
+Nombre: Oscar Ernesto Torres López`;
+
+  navigator.clipboard.writeText(texto);
+  alert("Datos copiados. Péguelos en su banco para transferir.");
+}
+  
 <script>
 let precio = 500;
 let cantidad = 1;
