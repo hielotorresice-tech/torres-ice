@@ -16,14 +16,6 @@ body{
   align-items:center;
 }
 
-.container{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-}
-
 .app{
   width:100%;
   max-width:420px;
@@ -89,13 +81,34 @@ select{
   border-radius:8px;
   margin-top:10px;
 }
-</style>
 
+.btn{
+  display:block;
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.whatsapp{
+  background:#25D366;
+  color:white;
+}
+
+.call{
+  background:#0077cc;
+  color:white;
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
+
   <h1>🧊 Torres Ice 🧊</h1>
   <div class="sub">Venta de Hielo · Copiapó</div>
   <div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
@@ -111,12 +124,12 @@ select{
       <button onclick="cambiar(1)">+</button>
     </div>
 
-    <div class="line">Subtotal: $<span id="subtotal">500</span></div>
-    <div class="line">Delivery: $<span id="delivery">0</span></div>
-    <div class="line total">Total: $<span id="total">500</span></div>
+    <div class="line">Subtotal bolsas: $<span id="subtotal">500</span></div>
+    <div class="line">Delivery: $<span id="delivery">1000</span></div>
+    <div class="line total">TOTAL A PAGAR: $<span id="total">1500</span></div>
 
     <select id="zona" onchange="actualizar()">
-      <option value="">Seleccione zona</option>
+      <option value="">Seleccione zona de entrega</option>
       <option value="centro">Copiapó Centro (Gratis desde 10)</option>
       <option value="alrededores">Copiapó Alrededores (Gratis desde 15)</option>
       <option value="paipote">Paipote (Gratis desde 20)</option>
@@ -124,18 +137,11 @@ select{
       <option value="retiro">Retiro en local</option>
     </select>
 
-    <div class="transfer">
-      <strong>Pago por Transferencia</strong><br>
-      Banco: COOPEUCH<br>
-      Tipo: Cuenta Vista<br>
-      Cuenta: 251105735<br>
-      RUT: 12.218.473-0<br>
-      Nombre: Oscar Ernesto Torres López
-      <button class="copy" onclick="copiar()">📋 Copiar datos</button>
-    </div>
+    <button class="btn whatsapp" onclick="enviarWhatsApp()">📱 Pedir por WhatsApp</button>
+    <a href="tel:+56927731874"><button class="btn call">📞 Llamar ahora</button></a>
 
-    <a id="wp" class="whatsapp" target="_blank">📱 Enviar pedido por WhatsApp</a>
   </div>
+
 </div>
 
 <script>
@@ -143,16 +149,16 @@ let precio = 500;
 let cantidad = 1;
 
 const deliveryConfig = {
-  centro:{costo:1000,gratis:10},
-  alrededores:{costo:1500,gratis:15},
-  paipote:{costo:2000,gratis:20},
-  tamarilla:{costo:2500,gratis:25},
-  retiro:{costo:0,gratis:0}
+  centro:{costo:1000, gratis:10},
+  alrededores:{costo:1500, gratis:15},
+  paipote:{costo:2000, gratis:20},
+  tamarilla:{costo:2500, gratis:25},
+  retiro:{costo:0, gratis:0}
 };
 
 function cambiar(v){
   cantidad += v;
-  if(cantidad<1) cantidad=1;
+  if(cantidad < 1) cantidad = 1;
   actualizar();
 }
 
@@ -172,33 +178,22 @@ function actualizar(){
   document.getElementById("subtotal").innerText = subtotal;
   document.getElementById("delivery").innerText = delivery;
   document.getElementById("total").innerText = total;
-
-  let zonaTxt = zona ? document.getElementById("zona").options[document.getElementById("zona").selectedIndex].text : "No definida";
-
-  let msg =
-`Hola, quiero pedir hielo Torres Ice.
-
-Cantidad: ${cantidad} bolsa(s)
-Zona: ${zonaTxt}
-Subtotal: $${subtotal}
-Delivery: $${delivery}
-Total: $${total}
-
-Ya realicé la transferencia y adjunto comprobante.`;
-
-  document.getElementById("wp").href =
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
-function copiar(){
-  navigator.clipboard.writeText(
-`Banco: COOPEUCH
-Cuenta Vista
-N° 251105735
-RUT 12.218.473-0
-Oscar Ernesto Torres López`
-  );
-  alert("Datos copiados");
+function enviarWhatsApp(){
+  let zona = document.getElementById("zona").value;
+  let subtotal = cantidad * precio;
+  let delivery = document.getElementById("delivery").innerText;
+  let total = document.getElementById("total").innerText;
+
+  let mensaje = `Hola, quiero pedir hielo Torres Ice.%0A` +
+                `Cantidad: ${cantidad} bolsas (1Kg).%0A` +
+                `Zona: ${zona || "No seleccionada"}%0A` +
+                `Subtotal: $${subtotal}%0A` +
+                `Delivery: $${delivery}%0A` +
+                `Total: $${total}`;
+
+  window.open(`https://wa.me/56927731874?text=${mensaje}`, "_blank");
 }
 
 actualizar();
