@@ -151,6 +151,21 @@ function actualizar(){
   document.getElementById("total").innerText = total;
 }
 
+<div class="transferencia">
+  <h3>💳 Pago por Transferencia</h3>
+  <p>Transfiere el total y envía el comprobante por WhatsApp.</p>
+
+  <div class="datos">
+    <p><strong>Banco:</strong> COOPEUCH</p>
+    <p><strong>Tipo de cuenta:</strong> Vista</p>
+    <p><strong>N° de cuenta:</strong> <span id="cta">251105735</span></p>
+    <p><strong>RUT:</strong> 12.218.473-0</p>
+    <p><strong>Nombre:</strong> Oscar Ernesto Torres López</p>
+
+    <button onclick="copiarDatos()">📋 Copiar datos</button>
+  </div>
+</div>
+  
 function armarWhatsApp(){
   let zona = document.getElementById("zona").value || "No indicada";
   let subtotal = cantidad * precio;
