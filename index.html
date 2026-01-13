@@ -17,13 +17,28 @@ body{
 }
 
 .app{
-  width:95%;
+  width:100%;
   max-width:520px;
+  min-height:100vh;
   background:white;
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 10px 40px rgba(0,0,0,.25);
+  border-radius:0;
+  padding:20px;
+  box-shadow:none;
   text-align:center;
+}
+
+/* En pantallas grandes vuelve al estilo tarjeta */
+
+  @media (min-width: 700px){
+  .app{
+    width:95%;
+    min-height:auto;
+    max-width:520px;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 40px rgba(0,0,0,.25);
+    margin:40px auto;
+  }
 }
 
 h1{
