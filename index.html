@@ -7,38 +7,27 @@
 <style>
 body{
   margin:0;
-  min-height:100vh;
   font-family: Arial, sans-serif;
-  background: url("fondo-hielo.jpg") no-repeat center center fixed;
-  background-size: cover;
+  background:url("fondo-hielo.jpg") no-repeat center center fixed;
+  background-size:cover;
   display:flex;
   justify-content:center;
   align-items:center;
+  min-height:100vh;
 }
 
-.app{
+.card{
+  background:white;
   width:100%;
   max-width:420px;
-  background:white;
-  border-radius:20px;
+  border-radius:18px;
   padding:25px;
-  box-shadow:0 10px 40px rgba(0,0,0,.25);
+  box-shadow:0 10px 40px rgba(0,0,0,0.3);
   text-align:center;
 }
 
-h1{
-  margin:5px 0;
-  color:#0077cc;
-}
-
-.sub{
-  color:#555;
-  font-size:14px;
-}
-
-.product{
-  margin-top:20px;
-}
+h1{color:#0077cc;margin:5px 0;}
+.sub{font-size:14px;color:#555;}
 
 .qty{
   display:flex;
@@ -46,102 +35,99 @@ h1{
   align-items:center;
   margin:15px 0;
 }
-
 .qty button{
-  width:40px;
-  height:40px;
-  font-size:20px;
+  width:40px;height:40px;
   border:none;
   background:#0077cc;
   color:white;
+  font-size:20px;
   border-radius:50%;
-  cursor:pointer;
 }
+.qty span{width:60px;font-size:22px;}
 
-.qty span{
-  width:60px;
-  font-size:20px;
-  text-align:center;
-}
+.line{margin:8px 0;font-size:16px;}
+.total{font-size:20px;color:#d10000;font-weight:bold;}
 
-.line{
-  margin:8px 0;
-  font-size:16px;
-}
-
-.total{
-  color:red;
-  font-size:20px;
-  font-weight:bold;
-}
-
-select{
+input,select{
   width:100%;
   padding:10px;
+  margin:6px 0;
   border-radius:8px;
-  margin-top:10px;
+  border:1px solid #ccc;
 }
 
 .btn{
   display:block;
   width:100%;
   padding:12px;
-  margin-top:10px;
+  margin:8px 0;
   border:none;
   border-radius:10px;
   font-size:16px;
+  color:white;
   cursor:pointer;
 }
+.whatsapp{background:#25D366;}
+.call{background:#0077cc;}
+.pay{background:#2b2b2b;}
 
-.whatsapp{
-  background:#25D366;
-  color:white;
-}
-
-.call{
-  background:#0077cc;
-  color:white;
+.map{
+  margin-top:15px;
+  border-radius:12px;
+  overflow:hidden;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
+<div class="card">
   <h1>🧊 Torres Ice 🧊</h1>
   <div class="sub">Venta de Hielo · Copiapó</div>
   <div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
 
-  <div class="product">
-    <h3>Bolsa de Hielo</h3>
-    <p>Formato: 1 Kg</p>
-    <p>Precio unitario: <strong>$500</strong></p>
+  <h3>Bolsa de Hielo</h3>
+  <p>Formato 1 Kg</p>
+  <p><strong>$500 c/u</strong></p>
 
-    <div class="qty">
-      <button onclick="cambiar(-1)">−</button>
-      <span id="cantidad">1</span>
-      <button onclick="cambiar(1)">+</button>
-    </div>
-
-    <div class="line">Subtotal bolsas: $<span id="subtotal">500</span></div>
-    <div class="line">Delivery: $<span id="delivery">1000</span></div>
-    <div class="line total">TOTAL A PAGAR: $<span id="total">1500</span></div>
-
-    <select id="zona" onchange="actualizar()">
-      <option value="">Seleccione zona de entrega</option>
-      <option value="centro">Copiapó Centro (Gratis desde 10)</option>
-      <option value="alrededores">Copiapó Alrededores (Gratis desde 15)</option>
-      <option value="paipote">Paipote (Gratis desde 20)</option>
-      <option value="tamarilla">Tierra Amarilla (Gratis desde 25)</option>
-      <option value="retiro">Retiro en local</option>
-    </select>
-
-    <button class="btn whatsapp" onclick="enviarWhatsApp()">📱 Pedir por WhatsApp</button>
-    <a href="tel:+56927731874"><button class="btn call">📞 Llamar ahora</button></a>
-
+  <div class="qty">
+    <button onclick="cambiar(-1)">−</button>
+    <span id="cantidad">1</span>
+    <button onclick="cambiar(1)">+</button>
   </div>
 
+  <div class="line">Subtotal: $<span id="subtotal">500</span></div>
+  <div class="line">Delivery: $<span id="delivery">0</span></div>
+  <div class="line total">TOTAL: $<span id="total">500</span></div>
+
+  <select id="zona" onchange="actualizar()">
+    <option value="">Zona de entrega</option>
+    <option value="centro">Copiapó Centro (Gratis 10+)</option>
+    <option value="alrededores">Alrededores (Gratis 15+)</option>
+    <option value="paipote">Paipote (Gratis 20+)</option>
+    <option value="tamarilla">Tierra Amarilla (Gratis 25+)</option>
+    <option value="retiro">Retiro en local</option>
+  </select>
+
+  <input id="nombre" placeholder="Nombre del cliente">
+  <input id="fono" placeholder="N° celular">
+  <input id="direccion" placeholder="Dirección de entrega">
+
+  <a id="wp" class="btn whatsapp" target="_blank">📱 Pedir por WhatsApp</a>
+  <a href="tel:+56927731874" class="btn call">📞 Llamar ahora</a>
+  <a href="https://link.mercadopago.cl/torresice" target="_blank" class="btn pay">💳 Pagar con Mercado Pago</a>
+
+  <div class="map">
+    <iframe 
+      src="https://maps.google.com/maps?q=Miguel%20Gallo%201157%20Copiap%C3%B3&t=&z=16&ie=UTF8&iwloc=&output=embed"
+      width="100%" height="200" style="border:0;">
+    </iframe>
+  </div>
+
+  <div class="sub" style="margin-top:10px;">
+    📍 Copiapó · Atención directa por WhatsApp<br>
+    🚚 Delivery Local
+  </div>
 </div>
 
 <script>
@@ -149,11 +135,11 @@ let precio = 500;
 let cantidad = 1;
 
 const deliveryConfig = {
-  centro:{costo:1000, gratis:10},
-  alrededores:{costo:1500, gratis:15},
-  paipote:{costo:2000, gratis:20},
-  tamarilla:{costo:2500, gratis:25},
-  retiro:{costo:0, gratis:0}
+  centro:{costo:1000,gratis:10},
+  alrededores:{costo:1500,gratis:15},
+  paipote:{costo:2000,gratis:20},
+  tamarilla:{costo:2500,gratis:25},
+  retiro:{costo:0,gratis:0}
 };
 
 function cambiar(v){
@@ -178,22 +164,23 @@ function actualizar(){
   document.getElementById("subtotal").innerText = subtotal;
   document.getElementById("delivery").innerText = delivery;
   document.getElementById("total").innerText = total;
-}
 
-function enviarWhatsApp(){
-  let zona = document.getElementById("zona").value;
-  let subtotal = cantidad * precio;
-  let delivery = document.getElementById("delivery").innerText;
-  let total = document.getElementById("total").innerText;
+  let nombre = document.getElementById("nombre").value;
+  let fono = document.getElementById("fono").value;
+  let direccion = document.getElementById("direccion").value;
 
-  let mensaje = `Hola, quiero pedir hielo Torres Ice.%0A` +
-                `Cantidad: ${cantidad} bolsas (1Kg).%0A` +
-                `Zona: ${zona || "No seleccionada"}%0A` +
-                `Subtotal: $${subtotal}%0A` +
-                `Delivery: $${delivery}%0A` +
-                `Total: $${total}`;
+  let msg = `Hola, quiero pedir hielo Torres Ice ❄️
+Cantidad: ${cantidad} bolsas
+Subtotal: $${subtotal}
+Delivery: $${delivery}
+Total: $${total}
 
-  window.open(`https://wa.me/56927731874?text=${mensaje}`, "_blank");
+Nombre: ${nombre}
+Celular: ${fono}
+Dirección: ${direccion}`;
+
+  document.getElementById("wp").href =
+   "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
 actualizar();
