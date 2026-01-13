@@ -1,1 +1,114 @@
-<div class="col-xs-5"><div class="dropdown sortingOpts"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-sort"></i> Ordenar por</button><div class="dropdown-menu" aria-labelledby="dropdownMenu1"><form action="https://www.envuelve.cl/tienda/bolsas-para-envasar-hielo" class="autosubmit pull-left" method="post"><div><select name="sort" id="product_sort" class="form-control"><option value="" disabled="">-- Por favor, seleccione --</option><option value="name|DESC">Nombre (Z-A)</option><option value="name|ASC">Nombre (A-Z)</option><option value="date_added|DESC">Fecha de entrada (El más nuevo primero)</option><option value="date_added|ASC">Fecha de entrada (El más antiguo primero)</option><option value="price|DESC">Precio (De mayor a menor)</option><option value="price|ASC">Precio (De menor a mayor)</option><option value="stock_level|DESC">Stock (De mayor a menor)</option><option value="stock_level|ASC">Stock (De menor a mayor)</option></select><input type="submit" value="Clasificar" class="hidden"></div><input type="hidden" name="token" class="cc_session_token" value="0ec6dccc3a8cff796cfba29ed2411186"></form></div></div></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Hielo - Hielo Polar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #e6f7ff;
+            color: #333;
+        }
+        header {
+            background: #00aaff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .hero {
+            background: url('https://via.placeholder.com/1200x400?text=Venta+de+Hielo') center/cover no-repeat;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        section {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .producto {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            flex: 1 1 calc(33% - 20px);
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        footer {
+            background: #00aaff;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hielo Polar</h1>
+    <nav>
+        <a href="#productos">Productos</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+</header>
+
+<div class="hero">
+    ¡Hielo de calidad, siempre frío!
+</div>
+
+<section id="productos">
+    <h2>Nuestros Productos</h2>
+    <div class="producto">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200?text=Bolsa+de+Hielo+5kg" alt="Bolsa de Hielo 5kg">
+            <h3>Bolsa de Hielo 5kg</h3>
+            <p>\$3.000 CLP</p>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200?text=Bolsa+de+Hielo+10kg" alt="Bolsa de Hielo 10kg">
+            <h3>Bolsa de Hielo 10kg</h3>
+            <p>\$5.000 CLP</p>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200?text=Hielo+en+Cubos" alt="Hielo en Cubos">
+            <h3>Hielo en Cubos</h3>
+            <p>\$4.000 CLP</p>
+        </div>
+    </div>
+</section>
+
+<section id="contacto">
+    <h2>Contacto</h2>
+    <p>📞 Teléfono: +56 9 1234 5678</p>
+    <p>📧 Email: contacto@hielopolar.cl</p>
+</section>
+
+<footer>
+    &copy; 2026 Hielo Polar - Todos los derechos reservados
+</footer>
+
+</body>
+</html>
