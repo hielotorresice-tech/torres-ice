@@ -13,39 +13,48 @@
     background-size: cover;
     color:#000;
   }
+
+  /* Tarjeta principal transparente desde encabezado hasta pie */
+  .main-container {
+    backdrop-filter: blur(5px);
+    background-color: rgba(255,255,255,0.15);
+    min-height: 100vh;
+  }
+
   header {
     display:flex;
     flex-direction:column;
     align-items:center;
     padding:15px 10px;
-    background-color:rgba(255,255,255,0.9);
-    border-bottom:2px solid #ccc;
   }
   header img { height:80px; max-width:90%; margin-bottom:10px; }
   header h1 { font-size:1.3rem; margin:0; text-align:center; }
-  .info { padding:10px; background-color:rgba(224,247,255,0.9); font-size:0.9rem; text-align:center; }
+  .info { padding:10px; font-size:0.9rem; text-align:center; }
+
   .product { padding:15px; text-align:center; }
   .product h2 { margin:10px 0; font-size:1.3rem; }
   .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
   .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
   .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
   input[type="number"], input[type="text"], input[type="tel"], input[type="email"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; text-align:center; }
+
   .summary {
     padding:15px;
     margin:10px auto;
     border-radius:10px;
     max-width:400px;
     text-align:center;
-    background-color: rgba(255,255,255,0.2); /* Fondo transparente */
-    backdrop-filter: blur(5px);
+    background-color: transparent; 
   }
   .summary div { margin:5px 0; font-size:1rem; }
+
   .form-field { margin:10px 0; }
   select { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
   a.button-link { display:block; margin:5px 0; padding:12px; font-size:1rem; background-color:#25D366; color:white; text-decoration:none; border-radius:10px; text-align:center; font-weight:bold; }
   .call-link { background-color:#0077b6; }
 
+  /* Modal Transferencia */
   .modal {
     display:none;
     position: fixed;
@@ -54,7 +63,6 @@
     top:0;
     width:100%;
     height:100%;
-    overflow:auto;
     background-color: rgba(0,0,0,0.5);
     display:flex;
     align-items:center;
@@ -64,8 +72,8 @@
     background-color:#fff;
     padding:20px;
     border-radius:10px;
-    width:80%;
-    max-width:400px;
+    width:90%;
+    max-width:350px; /* Ajuste ancho */
     text-align:center;
     position: relative;
   }
@@ -78,10 +86,11 @@
     font-weight:bold;
     cursor:pointer;
   }
-  @media(min-width:600px) { .summary, .product { margin:20px auto; max-width:500px; } }
 </style>
 </head>
 <body>
+
+<div class="main-container">
 
 <header>
   <img src="logo_transparente.png" alt="Ice Towers Logo">
@@ -145,7 +154,9 @@
     <p>Banco: Coopeuch<br>
        Cuenta Vista: 251105735<br>
        RUT: 12.218.473-0<br>
-       Oscar Torres López</p>
+       Oscar Torres López<br>
+       E-mail: hielo.torres.ice@gmail.com
+    </p>
   </div>
 </div>
 
@@ -202,7 +213,6 @@ function updateWhatsAppLink(){
   document.getElementById('whatsappLink').href = "https://wa.me/56927731874?text=" + encodeURIComponent(message);
 }
 
-// Cerrar modal al hacer click fuera
 window.onclick = function(event){
   const modal = document.getElementById('modalTransfer');
   if(event.target == modal){ modal.style.display = "none"; }
@@ -211,5 +221,6 @@ window.onclick = function(event){
 updateTotal();
 </script>
 
+</div>
 </body>
 </html>
