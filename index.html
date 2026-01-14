@@ -3,89 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ice Towers - Venta de Hielo</title>
+<title>Torres Ice - Venta de Hielo</title>
 <style>
+  /* Reset y base */
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body, html { width:100%; height:100%; font-family: 'Arial', sans-serif; }
+
+  /* Fondo con efecto hielo */
   body {
-    font-family: Arial, sans-serif;
-    margin:0;
-    padding:0;
     background: url('fondo-hielo.png') no-repeat center center fixed;
     background-size: cover;
-    color:#000;
+    color: #000;
   }
 
-  /* Tarjeta principal transparente desde encabezado hasta pie */
+  /* Contenedor principal con blur y degradado */
   .main-container {
-    backdrop-filter: blur(5px);
-    background-color: rgba(255,255,255,0.15);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.15);
   }
 
+  /* Header */
   header {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 10px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(5px);
+    border-bottom: 2px solid #ccc;
   }
-  header img { height:80px; max-width:90%; margin-bottom:10px; }
-  header h1 { font-size:1.3rem; margin:0; text-align:center; }
-  .info { padding:10px; font-size:0.9rem; text-align:center; }
+  header img { height:60px; max-width:90%; margin-bottom:10px; }
+  header h1 { font-size:1.5rem; text-align:center; }
 
-  .product { padding:15px; text-align:center; }
-  .product h2 { margin:10px 0; font-size:1.3rem; }
-  .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
-  .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
-  .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
-  input[type="number"], input[type="text"], input[type="tel"], input[type="email"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; text-align:center; }
-
-  .summary {
-    padding:15px;
-    margin:10px auto;
-    border-radius:10px;
-    max-width:400px;
+  .info {
     text-align:center;
-    background-color: transparent; 
+    font-size:0.9rem;
+    padding:5px 10px;
+    background: rgba(224,247,255,0.25);
+    backdrop-filter: blur(5px);
   }
-  .summary div { margin:5px 0; font-size:1rem; }
 
+  /* Tarjeta producto */
+  .product-card {
+    margin:15px auto;
+    padding:15px;
+    max-width:400px;
+    border-radius:15px;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(6px);
+    text-align:center;
+  }
+
+  .product-card h2 { margin-bottom:5px; font-size:1.5rem; }
+  .product-card .price { font-size:1.7rem; margin:10px 0; color:#0077b6; }
+  .quantity {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:10px 0;
+  }
+  .quantity button { width:40px; height:40px; font-size:1.4rem; margin:0 5px; border-radius:50%; border:none; background:#ff6b00; color:white; cursor:pointer; transition: 0.2s; }
+  .quantity button:hover { background:#e85c00; }
+  .quantity input { width:70px; text-align:center; font-size:1.2rem; border-radius:10px; border:1px solid #ccc; }
+
+  /* Resumen */
+  .summary {
+    margin:15px auto;
+    max-width:400px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(5px);
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+  }
+  .summary div { margin:5px 0; font-size:1.1rem; }
   .form-field { margin:10px 0; }
-  select { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
-  button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
-  a.button-link { display:block; margin:5px 0; padding:12px; font-size:1rem; background-color:#25D366; color:white; text-decoration:none; border-radius:10px; text-align:center; font-weight:bold; }
-  .call-link { background-color:#0077b6; }
+  select, input[type="text"], input[type="tel"], input[type="email"] {
+    width:100%; padding:12px; border-radius:10px; font-size:1rem; border:1px solid #ccc;
+  }
+
+  /* Botones */
+  .btn { width:100%; padding:15px; font-size:1.1rem; margin:5px 0; border:none; border-radius:15px; cursor:pointer; font-weight:bold; transition:0.2s; }
+  .btn-pay { background:#ff6b00; color:white; }
+  .btn-pay:hover { background:#e85c00; }
+  .btn-transfer { background:#0077b6; color:white; }
+  .btn-transfer:hover { background:#005f8a; }
+  .btn-whatsapp { background:#25D366; color:white; display:flex; align-items:center; justify-content:center; }
+  .btn-whatsapp:hover { background:#1ebe57; }
+  .btn-call { background:#0077b6; color:white; }
+  .btn-call:hover { background:#005f8a; }
 
   /* Modal Transferencia */
   .modal {
     display:none;
     position: fixed;
     z-index: 1000;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
+    left:0; top:0;
+    width:100%; height:100%;
     background-color: rgba(0,0,0,0.5);
     display:flex;
     align-items:center;
     justify-content:center;
   }
   .modal-content {
-    background-color:#fff;
+    background:#fff;
     padding:20px;
-    border-radius:10px;
+    border-radius:15px;
     width:90%;
-    max-width:350px; /* Ajuste ancho */
+    max-width:350px;
     text-align:center;
-    position: relative;
   }
-  .close {
-    position:absolute;
-    top:10px;
-    right:15px;
-    color:#aaa;
-    font-size:28px;
-    font-weight:bold;
-    cursor:pointer;
-  }
+  .close { position:absolute; top:10px; right:15px; font-size:28px; font-weight:bold; color:#aaa; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -94,18 +125,17 @@
 
 <header>
   <img src="logo_transparente.png" alt="Ice Towers Logo">
-  <h1>Venta de Hielo · Copiapó</h1>
+  <h1>Torres Ice - Venta de Hielo</h1>
 </header>
 
 <div class="info">
   🕘 09:00 a 22:00 · 🚚 Delivery disponible · ✉️ hielo.torres.ice@gmail.com
 </div>
 
-<section class="product">
+<section class="product-card">
   <h2>Bolsa de Hielo</h2>
   <p>Formato: 1 Kg</p>
   <div class="price">$500 c/u</div>
-
   <div class="quantity">
     <button onclick="changeQuantity(-1)">−</button>
     <input type="number" id="qty" value="1" min="1" onchange="updateTotal()">
@@ -128,23 +158,15 @@
     </select>
   </div>
 
-  <div class="form-field">
-    <input type="text" id="name" placeholder="Cliente">
-  </div>
-  <div class="form-field">
-    <input type="tel" id="phone" placeholder="Celular">
-  </div>
-  <div class="form-field">
-    <input type="text" id="address" placeholder="Dirección">
-  </div>
-  <div class="form-field">
-    <input type="email" id="email" placeholder="E-mail">
-  </div>
+  <div class="form-field"><input type="text" id="name" placeholder="Cliente"></div>
+  <div class="form-field"><input type="tel" id="phone" placeholder="Celular"></div>
+  <div class="form-field"><input type="text" id="address" placeholder="Dirección"></div>
+  <div class="form-field"><input type="email" id="email" placeholder="E-mail"></div>
 
-  <button class="pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
-  <button class="pay" onclick="openTransfer()">Transferencia</button>
-  <a id="whatsappLink" href="#" target="_blank" class="button-link">📲 WhatsApp - Envío comprobante</a>
-  <a href="tel:+56927731874" class="button-link call-link">📞 Llamar Ahora</a>
+  <button class="btn btn-pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
+  <button class="btn btn-transfer" onclick="openTransfer()">🏦 Transferencia</button>
+  <a id="whatsappLink" href="#" target="_blank" class="btn btn-whatsapp">📲 WhatsApp - Envío comprobante</a>
+  <a href="tel:+56927731874" class="btn btn-call">📞 Llamar Ahora</a>
 </section>
 
 <div id="modalTransfer" class="modal">
@@ -187,17 +209,9 @@ function updateTotal(){
   updateWhatsAppLink();
 }
 
-function mercadoPago(){
-  window.open("https://link.mercadopago.cl/torresice",'_blank');
-}
-
-function openTransfer(){
-  document.getElementById('modalTransfer').style.display = "flex";
-}
-
-function closeTransfer(){
-  document.getElementById('modalTransfer').style.display = "none";
-}
+function mercadoPago(){ window.open("https://link.mercadopago.cl/torresice",'_blank'); }
+function openTransfer(){ document.getElementById('modalTransfer').style.display = "flex"; }
+function closeTransfer(){ document.getElementById('modalTransfer').style.display = "none"; }
 
 function updateWhatsAppLink(){
   const qty = document.getElementById('qty').value;
