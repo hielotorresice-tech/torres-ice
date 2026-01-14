@@ -45,7 +45,13 @@ body{
   box-shadow:0 10px 40px rgba(0,0,0,.2);
 
   display:flex;
-  flex-direction:column;   /* 🔑 ESTO ARREGLA TODO */
+  flex-direction:column;
+}
+
+/* 🔒 Protección de layout */
+.app *{
+  max-width:100%;
+  box-sizing:border-box;
 }
 
 h1{margin:5px 0;color:#008cff}
