@@ -8,8 +8,7 @@
 body{
   margin:0;
   padding:0;
-  display:flex;
-  justify-content:center;
+  background:#f2f6f9;
 }
 
 /* CONTENEDOR QUE CENTRA */
@@ -38,7 +37,6 @@ body{
   background:#fff;
   border-radius:20px;
   padding:20px;
-  margin:20px 0;
   box-shadow:0 10px 40px rgba(0,0,0,.2);
 
   display:flex;
@@ -242,4 +240,27 @@ actualizar();
 </script>
 
 </body>
+
+<body>
+
+<div class="page">
+  <div class="app">
+    <!-- TODO tu contenido -->
+  </div>
+</div>
+
+</body>
+
+.page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+.app *{
+  max-width:100%;
+  box-sizing:border-box;
+}
+  
 </html>
