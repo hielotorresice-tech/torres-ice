@@ -5,107 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ice Towers - Venta de Hielo</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f8ff;
-    margin: 0;
-    padding: 0;
-    color: #000;
-  }
-  header {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    border-bottom: 2px solid #ccc;
-  }
-  header img {
-    height: 50px;
-    margin-right: 15px;
-  }
-  header h1 {
-    font-size: 1.2rem;
-    margin: 0;
-  }
-  .info {
-    padding: 10px 20px;
-    background-color: #e0f7ff;
-    font-size: 0.9rem;
-  }
-  .product {
-    padding: 20px;
-    text-align: center;
-  }
-  .product h2 {
-    margin: 10px 0;
-  }
-  .price {
-    font-size: 1.5rem;
-    margin: 10px 0;
-    color: #0077b6;
-  }
-  .quantity {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-  }
-  .quantity button {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  input[type="number"] {
-    width: 60px;
-    text-align: center;
-    font-size: 1rem;
-  }
-  .summary {
-    padding: 20px;
-    background-color: #ffffff;
-    margin: 10px;
-    border-radius: 10px;
-  }
-  .summary div {
-    margin: 5px 0;
-  }
-  .form-field {
-    margin: 10px 0;
-  }
-  input[type="text"], input[type="tel"], input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  button.pay {
-    background-color: #ff6b00;
-    color: white;
-    padding: 12px;
-    width: 100%;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  .contact {
-    padding: 15px 20px;
-    background-color: #e0f7ff;
-    font-size: 0.9rem;
-  }
-  a.button-link {
-    display: inline-block;
-    margin: 5px 0;
-    padding: 8px 12px;
-    background-color: #0077b6;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:#f0f8ff; color:#000; }
+  header { display:flex; align-items:center; justify-content:center; padding:10px 20px; background-color:#fff; border-bottom:2px solid #ccc; flex-direction:column; }
+  header img { height:60px; margin-bottom:10px; }
+  header h1 { font-size:1.2rem; margin:0; text-align:center; }
+  .info { padding:10px 20px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
+  .product { padding:20px; text-align:center; }
+  .product h2 { margin:10px 0; }
+  .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
+  .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
+  .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
+  input[type="number"] { width:60px; text-align:center; font-size:1rem; }
+  .summary { padding:20px; background-color:#fff; margin:10px; border-radius:10px; }
+  .summary div { margin:5px 0; text-align:left; }
+  .form-field { margin:10px 0; }
+  input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:8px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
+  button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
+  .contact { padding:15px 20px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
+  a.button-link { display:inline-block; margin:5px 0; padding:8px 12px; background-color:#0077b6; color:white; text-decoration:none; border-radius:5px; }
 </style>
 </head>
 <body>
@@ -133,11 +50,11 @@
 
 <section class="summary">
   <div>Subtotal: $<span id="subtotal">500</span></div>
-  <div>Costo Delivery: $<span id="delivery">0</span> ("Por Zona")</div>
+  <div>Costo Delivery: $<span id="delivery">0</span></div>
   <div><strong>TOTAL: $<span id="total">500</span></strong></div>
 
   <div class="form-field">
-    <input type="text" id="zone" placeholder="Zona de entrega">
+    <input type="text" id="zone" placeholder="Zona de entrega" onchange="updateDelivery()">
   </div>
   <div class="form-field">
     <input type="text" id="name" placeholder="Nombre del cliente">
@@ -149,13 +66,14 @@
     <input type="text" id="address" placeholder="Dirección de entrega">
   </div>
 
-  <button class="pay" onclick="alert('Redirigir a pago Mercado Pago')">💳 Pagar con Mercado Pago</button>
-  <button class="pay" onclick="alert('Instrucciones transferencia Banco Coopeuch')">Transferencia</button>
+  <button class="pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
+  <button class="pay" onclick="transferencia()">Transferencia</button>
+  <a id="whatsappLink" href="#" target="_blank" class="button-link">📱 Enviar pedido por WhatsApp</a>
 </section>
 
 <div class="contact">
   Banco: Coopeuch · Cuenta Vista 251105735 · RUT: 12.218.473-0 · Oscar Torres López<br>
-  📱 Enviar comprobante por WhatsApp · 📞 <a href="tel:+569XXXXXXXXX" class="button-link">Llamar ahora</a><br>
+  📞 <a href="tel:+569XXXXXXXXX" class="button-link">Llamar ahora</a><br>
   📍 Copiapó · Atención directa por WhatsApp<br>
   🚚 Delivery Local
 </div>
@@ -177,6 +95,39 @@
     const subtotal = price * qty;
     document.getElementById('subtotal').textContent = subtotal;
     document.getElementById('total').textContent = subtotal + delivery;
+    updateWhatsAppLink();
+  }
+
+  function updateDelivery() {
+    const zone = document.getElementById('zone').value.toLowerCase();
+    let deliveryCost = 0;
+    if(zone.includes("centro")) deliveryCost = 500;
+    else if(zone.includes("norte")) deliveryCost = 800;
+    else if(zone.includes("sur")) deliveryCost = 700;
+    else deliveryCost = 0;
+    document.getElementById('delivery').textContent = deliveryCost;
+    updateTotal();
+  }
+
+  function mercadoPago() {
+    const total = document.getElementById('total').textContent;
+    // Link de prueba Mercado Pago
+    window.open(`https://www.mercadopago.cl/checkout/v1/redirect?pref_id=test_${total}`, '_blank');
+  }
+
+  function transferencia() {
+    alert('Instrucciones transferencia Banco Coopeuch:\nCuenta Vista 251105735\nRUT: 12.218.473-0\nOscar Torres López');
+  }
+
+  function updateWhatsAppLink() {
+    const name = document.getElementById('name').value || "Cliente";
+    const phone = document.getElementById('phone').value || "";
+    const zone = document.getElementById('zone').value || "";
+    const address = document.getElementById('address').value || "";
+    const qty = document.getElementById('qty').value;
+    const total = document.getElementById('total').textContent;
+    const message = `Hola, soy ${name}. Quiero pedir ${qty} bolsa(s) de hielo. Zona: ${zone}. Dirección: ${address}. Total: $${total}`;
+    document.getElementById('whatsappLink').href = `https://wa.me/569XXXXXXXXX?text=${encodeURIComponent(message)}`;
   }
 
   updateTotal();
