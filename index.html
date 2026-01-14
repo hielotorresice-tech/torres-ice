@@ -1,1 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torres Ice | Venta de Hielo</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+
+body{
+  min-height:100vh;
+  background:#f2f6f9;
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+.app{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,.25);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.header{text-align:center}
+.sub{font-size:14px;color:#555}
+
+h1{color:#008cff}
+
+.qty{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+}
+
+.qty button{
+  width:45px;height:45px;
+  border:none;border-radius:50%;
+  background:#008cff;color:#fff;
+  font-size:22px;
+}
+
+.qty span{width:50px;text-align:center;font-size:22px}
+
+.line{display:flex;justify-content:space-between;font-size:16px}
+.total{font-size:20px;font-weight:bold;color:red}
+
+select,input{
+  width:100%;padding:10px;
+  border-radius:8px;border:1px solid #ccc;
+}
+
+.btn{
+  width:100%;padding:16px;
+  border:none;border-radius:14px;
+  font-size:16px;font-weight:bold;
+  color:#fff;cursor:pointer;
+}
+
+.mercado{background:#009ee3}
+.whatsapp{background:#25d366}
+.llamar{background:#0077cc}
+
+.transfer{
+  background:#f4f4f4;
+  padding:12px;
+  border-radius:12px;
+  text-align:center;
+  font-size:14px;
+}
+
+.footer{
+  text-align:center;
+  font-size:14px;
+  color:#555;
+}
+
+iframe{
+  width:100%;height:200px;
+  border:0;border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+<div class="app">
+
+<div class="header">
+<h1>🧊 Torres Ice 🧊</h1>
+<div class="sub">Venta de Hielo · Copiapó</div>
+<div class="sub">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
+</div>
+
+<h3>Bolsa de Hielo</h3>
+<div>Formato: 1 Kg</div>
+<div><strong>$500 c/u</strong></div>
+
+<div class="qty">
+<button onclick="cambiar(-1)">−</button>
+<span id="cantidad">1</span>
+<button onclick="cambiar(1)">+</button>
+</div>
+
+<div class="line">Subtotal: $<span id="subtotal">500</span></div>
+<div class="line">Delivery: $<span id="delivery">0</span></div>
+<div class="line total">TOTAL: $<span id="total">500</span></div>
+
+<select id="zona" onchange="actualizar()">
+<option value="">Zona de entrega</option>
+<option value="centro">Copiapó Centro (Gratis desde 10)</option>
+<option value="alrededores">Alrededores (Gratis desde 15)</option>
+<option value="paipote">Paipote (Gratis desde 20)</option>
+<option value="tamarilla">T. Amarilla (Gratis desde 25)</option>
+<option value="retiro">Retiro en local</option>
+</select>
+
+<input id="nombre" placeholder="Nombre del cliente">
+<input id="fono" placeholder="N° celular">
+<input id="direccion" placeholder="Dirección de entrega">
+
+<a href="https://link.mercadopago.cl/torresice" target="_blank">
+<button class="btn mercado">💳 Pagar con Mercado Pago</button>
+</a>
+
+<div class="transfer">
+<strong>Transferencia</strong><br>
+Banco: Coopeuch<br>
+Cuenta Vista 251105735<br>
+RUT: 12.218.473-0<br>
+Oscar Torres López
+</div>
+
+<a id="ws" target="_blank">
+<button class="btn whatsapp">📱 Enviar comprobante por WhatsApp</button>
+</a>
+
+<a href="tel:+56927731874">
+<button class="btn llamar">📞 Llamar ahora</button>
+</a>
+
+<iframe src="https://www.google.com/maps?q=Miguel+Gallo+1157+Copiapó&output=embed"></iframe>
+
+<div class="footer">
+📍 Copiapó · Atención directa por WhatsApp<br>
+🚚 Delivery Local
+</div>
+
+</div>
+</div>
+
+<script>
+let precio=500,cantidad=1;
+const deliveryConfig={
+centro:{costo:1000,gratis:10},
+alrededores:{costo:1500,gratis:15},
+paipote:{costo:2000,gratis:20},
+tamarilla:{costo:2500,gratis:25},
+retiro:{costo:0,gratis:0}
+};
+
+function cambiar(v){cantidad=Math.max(1,cantidad+v);actualizar()}
+
+function actualizar(){
+let subtotal=cantidad*precio;
+let zona=zonaSelect.value;
+let delivery=0;
+if(zona){
+let z=deliveryConfig[zona];
+if(cantidad<z.gratis)delivery=z.costo;
+}
+let total=subtotal+delivery;
+cantidadEl.textContent=cantidad;
+subtotalEl.textContent=subtotal;
+deliveryEl.textContent=delivery;
+totalEl.textContent=total;
+
+let msg=`Hola, quiero pedir hielo Torres Ice 🧊
+
+Cantidad: ${cantidad} bolsas
+Subtotal: $${subtotal}
+Delivery: $${delivery}
+Total: $${total}
+
+Cliente: ${nombre.value||"-"}
+Celular: ${fono.value||"-"}
+Dirección: ${direccion.value||"-"}`;
+
+ws.href="https://wa.me/56927731874?text="+encodeURIComponent(msg);
+}
+
+const cantidadEl=document.getElementById("cantidad");
+const subtotalEl=document.getElementById("subtotal");
+const deliveryEl=document.getElementById("delivery");
+const totalEl=document.getElementById("total");
+const zonaSelect=document.getElementById("zona");
+const nombre=document.getElementById("nombre");
+const fono=document.getElementById("fono");
+const direccion=document.getElementById("direccion");
+const ws=document.getElementById("ws");
+
+actualizar();
+</script>
+
+</body>
+</html>
