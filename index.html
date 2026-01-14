@@ -3,270 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICE TOWERS - Venta de Hielo</title>
+<title>Torres Ice - Venta de Hielo</title>
+
 <style>
-  /* Reset y base */
-  * { box-sizing: border-box; margin:0; padding:0; }
-  body, html { width:100%; height:100%; font-family: 'Arial', sans-serif; }
+* { box-sizing:border-box; margin:0; padding:0; }
 
-  /* Fondo con efecto hielo */
-  body {
-    background: url('fondo-hielo.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #000;
-  }
-
-  /* Contenedor principal con blur y degradado */
-  .main-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(8px);
-    background: rgba(255,255,255,0.15);
-  }
-
-  /* Header */
-  header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 10px;
-    background: rgba(255,255,255,0.25);
-    backdrop-filter: blur(5px);
-    border-bottom: 2px solid #ccc;
-  }
-  header img { height:60px; max-width:90%; margin-bottom:10px; }
-  header h1 { font-size:1.5rem; text-align:center; }
-
-  .info {
-    text-align:center;
-    font-size:0.9rem;
-    padding:5px 10px;
-    background: rgba(224,247,255,0.25);
-    backdrop-filter: blur(5px);
-  }
-
-  /* Tarjeta producto */
-  .product-card {
-    margin:15px auto;
-    padding:15px;
-    max-width:400px;
-    border-radius:15px;
-    background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(6px);
-    text-align:center;
-  }
-
-  .product-card h2 { margin-bottom:5px; font-size:1.5rem; }
-  .product-card .price { font-size:1.7rem; margin:10px 0; color:#0077b6; }
-  .quantity {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:10px 0;
-  }
-  .quantity button { width:40px; height:40px; font-size:1.4rem; margin:0 5px; border-radius:50%; border:none; background:#ff6b00; color:white; cursor:pointer; transition: 0.2s; }
-  .quantity button:hover { background:#e85c00; }
-  .quantity input { width:70px; text-align:center; font-size:1.2rem; border-radius:10px; border:1px solid #ccc; }
-
-  /* Resumen */
-  .summary {
-    margin:15px auto;
-    max-width:400px;
-    background: rgba(255,255,255,0.25);
-    backdrop-filter: blur(5px);
-    border-radius:15px;
-    padding:15px;
-    text-align:center;
-  }
-  .summary div { margin:5px 0; font-size:1.1rem; }
-  .form-field { margin:10px 0; }
-  select, input[type="text"], input[type="tel"], input[type="email"] {
-    width:100%; padding:12px; border-radius:10px; font-size:1rem; border:1px solid #ccc;
-  }
-
-  /* Botones */
-  .btn { width:100%; padding:15px; font-size:1.1rem; margin:5px 0; border:none; border-radius:15px; cursor:pointer; font-weight:bold; transition:0.2s; }
-  .btn-pay { background:#ff6b00; color:white; }
-  .btn-pay:hover { background:#e85c00; }
-  .btn-transfer { background:#0077b6; color:white; }
-  .btn-transfer:hover { background:#005f8a; }
-  .btn-whatsapp { background:#25D366; color:white; display:flex; align-items:center; justify-content:center; }
-  .btn-whatsapp:hover { background:#1ebe57; }
-  .btn-call { background:#0077b6; color:white; }
-  .btn-call:hover { background:#005f8a; }
-
-  /* Modal Transferencia */
-  .modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background-color: rgba(0,0,0,0.5);
-  align-items:center;
-  justify-content:center;
+body {
+  font-family: Arial, sans-serif;
+  background: url('fondo-hielo.png') no-repeat center center fixed;
+  background-size: cover;
 }
 
-<div id="postPago" class="modal">
-  <div class="modal-content">
-    <h2>✅ Pago iniciado</h2>
-    <p>
-      Si ya realizaste el pago por Mercado Pago,
-      envía el comprobante por WhatsApp para coordinar tu entrega 🚚❄️
-    </p>
-    <button class="btn btn-whatsapp" onclick="closePostPago()">
-      📲 Enviar comprobante por WhatsApp
-    </button>
-  </div>
-</div>
+.main-container {
+  min-height: 100vh;
+  backdrop-filter: blur(3px);
+  background: rgba(255,255,255,0.15);
+}
 
-  .modal-content {
-    background:#fff;
-    padding:20px;
-    border-radius:15px;
-    width:90%;
-    max-width:350px;
-    text-align:center;
-  }
-  .close { position:absolute; top:10px; right:15px; font-size:28px; font-weight:bold; color:#aaa; cursor:pointer; }
+/* HEADER */
+header {
+  text-align:center;
+  padding:15px;
+  background: rgba(255,255,255,0.25);
+}
+header img { height:60px; margin-bottom:5px; }
+header h1 { font-size:1.4rem; }
+
+/* INFO */
+.info {
+  text-align:center;
+  font-size:0.9rem;
+  padding:6px;
+  background: rgba(224,247,255,0.25);
+}
+
+/* CARD */
+.card {
+  max-width:400px;
+  margin:15px auto;
+  padding:15px;
+  border-radius:15px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(3px);
+  text-align:center;
+}
+
+/* CANTIDAD */
+.quantity {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:10px 0;
+}
+.quantity button {
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:50%;
+  background:#ff6b00;
+  color:#fff;
+  font-size:1.3rem;
+}
+.quantity input {
+  width:70px;
+  text-align:center;
+  font-size:1.2rem;
+  margin:0 8px;
+}
+
+/* INPUTS */
+input, select {
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+/* BOTONES */
+.btn {
+  width:100%;
+  padding:14px;
+  margin:6px 0;
+  font-size:1.05rem;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+}
+.btn-mp { background:#ff6b00; color:#fff; }
+.btn-tr { background:#0077b6; color:#fff; }
+.btn-wa {
+  background:#25D366;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  pointer-events:none;
+  opacity:0.5;
+}
+.btn-call { background:#005f8a; color:#fff; }
+
+/* MODAL */
+.modal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.5);
+  justify-content:center;
+  align-items:center;
+}
+.modal-content {
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  max-width:340px;
+  width:90%;
+  text-align:center;
+}
+.close {
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:26px;
+  cursor:pointer;
+}
 </style>
 </head>
-<body>
 
+<body>
 <div class="main-container">
 
 <header>
-  <img src="logo_transparente.png" alt="Ice Towers Logo">
-  <h1>ICE TOWERS - Venta de Hielo</h1>
+  <img src="logo_transparente.png">
+  <h1>Torres Ice - Venta de Hielo</h1>
 </header>
 
 <div class="info">
-  🕘 09:00 a 22:00 · 🚚 Delivery disponible · ✉️ hielo.torres.ice@gmail.com
+  🕘 09:00 a 22:00 · 🚚 Delivery · ✉️ hielo.torres.ice@gmail.com
 </div>
 
-<section class="product-card">
+<div class="card">
   <h2>Bolsa de Hielo</h2>
-  <p>Formato: 1 Kg</p>
-  <div class="price">$500 c/u</div>
+  <p>1 Kg · $500</p>
+
   <div class="quantity">
-    <button onclick="changeQuantity(-1)">−</button>
+    <button onclick="changeQty(-1)">−</button>
     <input type="number" id="qty" value="1" min="1" onchange="updateTotal()">
-    <button onclick="changeQuantity(1)">+</button>
-  </div>
-</section>
-
-<section class="summary">
-  <div>Subtotal: $<span id="subtotal">500</span></div>
-  <div>Delivery: $<span id="delivery">0</span></div>
-  <div><strong>Total: $<span id="total">500</span></strong></div>
-
-  <div class="form-field">
-    <select id="zone" onchange="updateTotal()">
-      <option value="retira" data-cost="0" data-free="0">Retira Cliente - $0</option>
-      <option value="copiapo_centro" data-cost="1000" data-free="10">Copiapó Centro - $1.000 (+10 Bolsas Delivery Gratis)</option>
-      <option value="copiapo_alto" data-cost="1200" data-free="10">Copiapó Sectores Alto - $1.200 (+10 Bolsas Delivery Gratis)</option>
-      <option value="paipote" data-cost="1500" data-free="10">Paipote - $1.500 (+10 Bolsas Delivery Gratis)</option>
-      <option value="tamarilla" data-cost="2000" data-free="15">T. Amarilla - $2.000 (+15 Bolsas Delivery Gratis)</option>
-    </select>
+    <button onclick="changeQty(1)">+</button>
   </div>
 
-  <div class="form-field">
-  <input type="text" id="name" placeholder="Cliente" oninput="updateWhatsAppLink()">
-</div>
+  <p>Subtotal: $<span id="subtotal">500</span></p>
+  <p>Delivery: $<span id="delivery">0</span></p>
+  <h3>Total: $<span id="total">500</span></h3>
 
-<div class="form-field">
-  <input type="tel" id="phone" placeholder="Celular" oninput="updateWhatsAppLink()">
-</div>
+  <select id="zone" onchange="updateTotal()">
+    <option data-cost="0" data-free="0">Retira Cliente $0</option>
+    <option data-cost="1000" data-free="10">Copiapó Centro $1000</option>
+    <option data-cost="1200" data-free="10">Copiapó Alto $1200</option>
+    <option data-cost="1500" data-free="10">Paipote $1500</option>
+    <option data-cost="2000" data-free="15">T. Amarilla $2000</option>
+  </select>
 
-<div class="form-field">
-  <input type="text" id="address" placeholder="Dirección" oninput="updateWhatsAppLink()">
-</div>
+  <input id="name" placeholder="Cliente" oninput="updateWhatsApp()">
+  <input id="phone" placeholder="Celular" oninput="updateWhatsApp()">
+  <input id="address" placeholder="Dirección" oninput="updateWhatsApp()">
+  <input id="email" placeholder="E-mail" oninput="updateWhatsApp()">
 
-<div class="form-field">
-  <input type="email" id="email" placeholder="E-mail" oninput="updateWhatsAppLink()">
-</div>
+  <button class="btn btn-mp" onclick="mercadoPago()">💳 Mercado Pago</button>
+  <button class="btn btn-tr" onclick="openTransfer()">🏦 Transferencia</button>
 
-  <button class="btn btn-pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
-    <button class="btn btn-transfer" onclick="openTransfer()">🏦 Transferencia</button>
-  <p style="font-size:0.9rem; margin-top:8px;">
-  ℹ️ Luego de pagar, vuelve a esta app y envía tu comprobante por WhatsApp.
-</p>
-  <a id="whatsappLink" href="#" target="_blank" class="btn btn-whatsapp">📲 WhatsApp - Envío comprobante</a>
+  <a id="wa" class="btn btn-wa">📲 WhatsApp - Envío comprobante</a>
   <a href="tel:+56927731874" class="btn btn-call">📞 Llamar Ahora</a>
-</section>
+</div>
 
+<!-- MODAL TRANSFERENCIA -->
 <div id="modalTransfer" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeTransfer()">&times;</span>
-    <h2>Datos Transferencia</h2>
-    <p>Banco: Coopeuch<br>
-       Cuenta Vista: 251105735<br>
-       RUT: 12.218.473-0<br>
-       Oscar Torres López<br>
-       E-mail: hielo.torres.ice@gmail.com
-    </p>
+    <span class="close" onclick="closeTransfer()">×</span>
+    <h3>Datos Transferencia</h3>
+    Banco: Coopeuch<br>
+    Cuenta Vista: 251105735<br>
+    RUT: 12.218.473-0<br>
+    Oscar Torres López<br>
+    Email: hielo.torres.ice@gmail.com
+  </div>
+</div>
+
+<!-- MODAL POST PAGO -->
+<div id="postPago" class="modal">
+  <div class="modal-content">
+    <h3>✅ Pago iniciado</h3>
+    <p>Envía tu comprobante por WhatsApp para coordinar entrega.</p>
+    <button class="btn btn-wa" onclick="closePostPago()">📲 Enviar WhatsApp</button>
   </div>
 </div>
 
 <script>
 const price = 500;
 
-function changeQuantity(amount){
-  const qtyInput = document.getElementById('qty');
-  let qty = parseInt(qtyInput.value) + amount;
-  if(qty < 1) qty = 1;
-  qtyInput.value = qty;
+function changeQty(n){
+  let q = parseInt(qty.value) + n;
+  if(q<1) q=1;
+  qty.value=q;
   updateTotal();
 }
 
 function updateTotal(){
-  const qty = parseInt(document.getElementById('qty').value);
-  const zoneSelect = document.getElementById('zone');
-  const zoneOption = zoneSelect.options[zoneSelect.selectedIndex];
-  let deliveryCost = parseInt(zoneOption.dataset.cost);
-  const freeBags = parseInt(zoneOption.dataset.free);
+  const q = parseInt(qty.value);
+  const z = zone.options[zone.selectedIndex];
+  let d = parseInt(z.dataset.cost);
+  if(q >= z.dataset.free && z.dataset.free > 0) d = 0;
 
-  if(qty >= freeBags && freeBags > 0){ deliveryCost = 0; }
+  subtotal.textContent = q*price;
+  delivery.textContent = d;
+  total.textContent = q*price + d;
+  updateWhatsApp();
+}
 
-  const subtotal = price * qty;
-  document.getElementById('subtotal').textContent = subtotal;
-  document.getElementById('delivery').textContent = deliveryCost;
-  document.getElementById('total').textContent = subtotal + deliveryCost;
-  updateWhatsAppLink();
+function enableWA(){
+  wa.style.pointerEvents="auto";
+  wa.style.opacity="1";
+}
+
+function updateWhatsApp(){
+  const msg =
+`Hola, quiero pedir hielo Torres Ice ❄️
+
+Cantidad: ${qty.value} bolsas
+Subtotal: $${subtotal.textContent}
+Delivery: $${delivery.textContent}
+Total: $${total.textContent}
+
+Cliente: ${name.value||'-'}
+Celular: ${phone.value||'-'}
+Dirección: ${address.value||'-'}
+E-mail: ${email.value||'-'}`;
+  wa.href="https://wa.me/56927731874?text="+encodeURIComponent(msg);
 }
 
 function mercadoPago(){
-  window.open("https://link.mercadopago.cl/torresice", "_blank");
-
-  setTimeout(() => {
-    document.getElementById("postPago").style.display = "flex";
-  }, 1000);
+  enableWA();
+  window.open("https://link.mercadopago.cl/torresice","_blank");
+  setTimeout(()=>postPago.style.display="flex",800);
 }
 
-function openTransfer(){ document.getElementById('modalTransfer').style.display = "flex"; }
-function closeTransfer(){ document.getElementById('modalTransfer').style.display = "none"; }
-
-function updateWhatsAppLink(){
-  const qty = document.getElementById('qty').value;
-  const subtotal = document.getElementById('subtotal').textContent;
-  const delivery = document.getElementById('delivery').textContent;
-  const total = document.getElementById('total').textContent;
-  const name = document.getElementById('name').value || "-";
-  const phone = document.getElementById('phone').value || "-";
-  const address = document.getElementById('address').value || "-";
-  const email = document.getElementById('email').value || "-";
-
-  const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}\nE-mail: ${email}`;
-  document.getElementById('whatsappLink').href = "https://wa.me/56927731874?text=" + encodeURIComponent(message);
-}
-
-window.onclick = function(event){
-  const modal = document.getElementById('modalTransfer');
-  if(event.target == modal){ modal.style.display = "none"; }
-}
+function openTransfer(){ enableWA(); modalTransfer.style.display="flex"; }
+function closeTransfer(){ modalTransfer.style.display="none"; }
+function closePostPago(){ postPago.style.display="none"; }
 
 updateTotal();
 </script>
