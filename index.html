@@ -159,10 +159,21 @@
     </select>
   </div>
 
-  <div class="form-field"><input type="text" id="name" placeholder="Cliente"></div>
-  <div class="form-field"><input type="tel" id="phone" placeholder="Celular"></div>
-  <div class="form-field"><input type="text" id="address" placeholder="Dirección"></div>
-  <div class="form-field"><input type="email" id="email" placeholder="E-mail"></div>
+  <div class="form-field">
+  <input type="text" id="name" placeholder="Cliente" oninput="updateWhatsAppLink()">
+</div>
+
+<div class="form-field">
+  <input type="tel" id="phone" placeholder="Celular" oninput="updateWhatsAppLink()">
+</div>
+
+<div class="form-field">
+  <input type="text" id="address" placeholder="Dirección" oninput="updateWhatsAppLink()">
+</div>
+
+<div class="form-field">
+  <input type="email" id="email" placeholder="E-mail" oninput="updateWhatsAppLink()">
+</div>
 
   <button class="btn btn-pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
   <button class="btn btn-transfer" onclick="openTransfer()">🏦 Transferencia</button>
