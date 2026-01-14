@@ -13,7 +13,14 @@
     background-size: cover;
     color:#000;
   }
-  header { display:flex; flex-direction:column; align-items:center; padding:15px 10px; background-color:rgba(255,255,255,0.9); border-bottom:2px solid #ccc; }
+  header {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:15px 10px;
+    background-color:rgba(255,255,255,0.9);
+    border-bottom:2px solid #ccc;
+  }
   header img { height:80px; max-width:90%; margin-bottom:10px; }
   header h1 { font-size:1.3rem; margin:0; text-align:center; }
   .info { padding:10px; background-color:rgba(224,247,255,0.9); font-size:0.9rem; text-align:center; }
@@ -22,16 +29,23 @@
   .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
   .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
   .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
-  input[type="number"] { width:60px; text-align:center; font-size:1rem; }
-  .summary { padding:15px; background-color:rgba(255,255,255,0.95); margin:10px auto; border-radius:10px; max-width:400px; text-align:center; }
+  input[type="number"], input[type="text"], input[type="tel"], input[type="email"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; text-align:center; }
+  .summary {
+    padding:15px;
+    margin:10px auto;
+    border-radius:10px;
+    max-width:400px;
+    text-align:center;
+    background-color: rgba(255,255,255,0.2); /* Fondo transparente */
+    backdrop-filter: blur(5px);
+  }
   .summary div { margin:5px 0; font-size:1rem; }
   .form-field { margin:10px 0; }
-  select, input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
+  select { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
   a.button-link { display:block; margin:5px 0; padding:12px; font-size:1rem; background-color:#25D366; color:white; text-decoration:none; border-radius:10px; text-align:center; font-weight:bold; }
   .call-link { background-color:#0077b6; }
 
-  /* Modal Transferencia centrado */
   .modal {
     display:none;
     position: fixed;
@@ -64,7 +78,6 @@
     font-weight:bold;
     cursor:pointer;
   }
-
   @media(min-width:600px) { .summary, .product { margin:20px auto; max-width:500px; } }
 </style>
 </head>
@@ -76,7 +89,7 @@
 </header>
 
 <div class="info">
-  🕘 09:00 a 22:00 · 🚚 Delivery disponible
+  🕘 09:00 a 22:00 · 🚚 Delivery disponible · ✉️ hielo.torres.ice@gmail.com
 </div>
 
 <section class="product">
@@ -115,6 +128,9 @@
   <div class="form-field">
     <input type="text" id="address" placeholder="Dirección">
   </div>
+  <div class="form-field">
+    <input type="email" id="email" placeholder="E-mail">
+  </div>
 
   <button class="pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
   <button class="pay" onclick="openTransfer()">Transferencia</button>
@@ -122,7 +138,6 @@
   <a href="tel:+56927731874" class="button-link call-link">📞 Llamar Ahora</a>
 </section>
 
-<!-- Modal Transferencia -->
 <div id="modalTransfer" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeTransfer()">&times;</span>
@@ -181,8 +196,9 @@ function updateWhatsAppLink(){
   const name = document.getElementById('name').value || "-";
   const phone = document.getElementById('phone').value || "-";
   const address = document.getElementById('address').value || "-";
+  const email = document.getElementById('email').value || "-";
 
-  const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}`;
+  const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}\nE-mail: ${email}`;
   document.getElementById('whatsappLink').href = "https://wa.me/56927731874?text=" + encodeURIComponent(message);
 }
 
