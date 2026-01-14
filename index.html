@@ -224,7 +224,14 @@ function updateTotal(){
   updateWhatsAppLink();
 }
 
-function mercadoPago(){ window.open("https://link.mercadopago.cl/torresice",'_blank'); }
+function mercadoPago(){
+  window.open("https://link.mercadopago.cl/torresice", "_blank");
+
+  setTimeout(() => {
+    document.getElementById("postPago").style.display = "flex";
+  }, 1000);
+}
+
 function openTransfer(){ document.getElementById('modalTransfer').style.display = "flex"; }
 function closeTransfer(){ document.getElementById('modalTransfer').style.display = "none"; }
 
