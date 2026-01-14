@@ -6,23 +6,26 @@
 <title>Ice Towers - Venta de Hielo</title>
 <style>
   body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:#f0f8ff; color:#000; }
-  header { display:flex; align-items:center; justify-content:center; padding:10px 20px; background-color:#fff; border-bottom:2px solid #ccc; flex-direction:column; }
-  header img { height:60px; margin-bottom:10px; }
+  header { display:flex; flex-direction:column; align-items:center; padding:15px 10px; background-color:#fff; border-bottom:2px solid #ccc; }
+  header img { height:60px; margin-bottom:10px; max-width:90%; }
   header h1 { font-size:1.2rem; margin:0; text-align:center; }
-  .info { padding:10px 20px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
-  .product { padding:20px; text-align:center; }
-  .product h2 { margin:10px 0; }
+  .info { padding:10px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
+  .product { padding:15px; text-align:center; }
+  .product h2 { margin:10px 0; font-size:1.3rem; }
   .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
   .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
-  .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
+  .quantity button { width:40px; height:40px; font-size:1.3rem; margin:0 5px; cursor:pointer; }
   input[type="number"] { width:60px; text-align:center; font-size:1rem; }
-  .summary { padding:20px; background-color:#fff; margin:10px; border-radius:10px; }
-  .summary div { margin:5px 0; text-align:left; }
+  .summary { padding:15px; background-color:#fff; margin:10px; border-radius:10px; }
+  .summary div { margin:5px 0; text-align:left; font-size:1rem; }
   .form-field { margin:10px 0; }
-  input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:8px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
+  input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
-  .contact { padding:15px 20px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
-  a.button-link { display:inline-block; margin:5px 0; padding:8px 12px; background-color:#0077b6; color:white; text-decoration:none; border-radius:5px; }
+  .contact { padding:15px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
+  a.button-link { display:block; margin:5px 0; padding:10px; background-color:#0077b6; color:white; text-decoration:none; border-radius:5px; text-align:center; }
+  @media(min-width:600px) {
+    .summary, .product { margin:20px auto; max-width:500px; }
+  }
 </style>
 </head>
 <body>
@@ -111,7 +114,6 @@
 
   function mercadoPago() {
     const total = document.getElementById('total').textContent;
-    // Link de prueba Mercado Pago
     window.open(`https://www.mercadopago.cl/checkout/v1/redirect?pref_id=test_${total}`, '_blank');
   }
 
