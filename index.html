@@ -7,25 +7,23 @@
 <style>
   body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:#f0f8ff; color:#000; }
   header { display:flex; flex-direction:column; align-items:center; padding:15px 10px; background-color:#fff; border-bottom:2px solid #ccc; }
-  header img { height:60px; margin-bottom:10px; max-width:90%; }
-  header h1 { font-size:1.2rem; margin:0; text-align:center; }
+  header img { height:80px; max-width:90%; margin-bottom:10px; }
+  header h1 { font-size:1.3rem; margin:0; text-align:center; }
   .info { padding:10px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
   .product { padding:15px; text-align:center; }
   .product h2 { margin:10px 0; font-size:1.3rem; }
   .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
   .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
-  .quantity button { width:40px; height:40px; font-size:1.3rem; margin:0 5px; cursor:pointer; }
+  .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
   input[type="number"] { width:60px; text-align:center; font-size:1rem; }
-  .summary { padding:15px; background-color:#fff; margin:10px; border-radius:10px; }
-  .summary div { margin:5px 0; text-align:left; font-size:1rem; }
+  .summary { padding:15px; background-color:#fff; margin:10px auto; border-radius:10px; max-width:400px; text-align:center; }
+  .summary div { margin:5px 0; font-size:1rem; }
   .form-field { margin:10px 0; }
-  input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
+  select, input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
   .contact { padding:15px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
   a.button-link { display:block; margin:5px 0; padding:10px; background-color:#0077b6; color:white; text-decoration:none; border-radius:5px; text-align:center; }
-  @media(min-width:600px) {
-    .summary, .product { margin:20px auto; max-width:500px; }
-  }
+  @media(min-width:600px) { .summary, .product { margin:20px auto; max-width:500px; } }
 </style>
 </head>
 <body>
@@ -53,86 +51,89 @@
 
 <section class="summary">
   <div>Subtotal: $<span id="subtotal">500</span></div>
-  <div>Costo Delivery: $<span id="delivery">0</span></div>
-  <div><strong>TOTAL: $<span id="total">500</span></strong></div>
+  <div>Delivery: $<span id="delivery">0</span></div>
+  <div><strong>Total: $<span id="total">500</span></strong></div>
 
   <div class="form-field">
-    <input type="text" id="zone" placeholder="Zona de entrega" onchange="updateDelivery()">
+    <select id="zone" onchange="updateDelivery()">
+      <option value="retira">Retira Cliente - $0</option>
+      <option value="copiapo_centro">Copiapó Centro - $1.000 (+10 Bolsas Delivery Gratis)</option>
+      <option value="copiapo_alto">Copiapó Sectores Alto - $1.200 (+10 Bolsas Delivery Gratis)</option>
+      <option value="paipote">Paipote - $1.500 (+10 Bolsas Delivery Gratis)</option>
+      <option value="tamarilla">T. Amarilla - $2.000 (+15 Bolsas Delivery Gratis)</option>
+    </select>
+  </div>
+
+  <div class="form-field">
+    <input type="text" id="name" placeholder="Cliente">
   </div>
   <div class="form-field">
-    <input type="text" id="name" placeholder="Nombre del cliente">
+    <input type="tel" id="phone" placeholder="Celular">
   </div>
   <div class="form-field">
-    <input type="tel" id="phone" placeholder="N° celular">
-  </div>
-  <div class="form-field">
-    <input type="text" id="address" placeholder="Dirección de entrega">
+    <input type="text" id="address" placeholder="Dirección">
   </div>
 
   <button class="pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
   <button class="pay" onclick="transferencia()">Transferencia</button>
-  <a id="whatsappLink" href="#" target="_blank" class="button-link">📱 Enviar pedido por WhatsApp</a>
+  <a id="whatsappLink" href="#" target="_blank" class="button-link">📱 Enviar Comprobante/Pedido</a>
+  <a href="tel:+569XXXXXXXXX" class="button-link">📞 Llamar Ahora</a>
 </section>
 
-<div class="contact">
-  Banco: Coopeuch · Cuenta Vista 251105735 · RUT: 12.218.473-0 · Oscar Torres López<br>
-  📞 <a href="tel:+56927731874" class="button-link">Llamar ahora</a><br>
-  📍 Copiapó · Atención directa por WhatsApp<br>
-  🚚 Delivery Local
-</div>
-
 <script>
-  const price = 500;
+const price = 500;
 
-  function changeQuantity(amount) {
-    const qtyInput = document.getElementById('qty');
-    let qty = parseInt(qtyInput.value) + amount;
-    if(qty < 1) qty = 1;
-    qtyInput.value = qty;
-    updateTotal();
-  }
-
-  function updateTotal() {
-    const qty = parseInt(document.getElementById('qty').value);
-    const delivery = parseInt(document.getElementById('delivery').textContent) || 0;
-    const subtotal = price * qty;
-    document.getElementById('subtotal').textContent = subtotal;
-    document.getElementById('total').textContent = subtotal + delivery;
-    updateWhatsAppLink();
-  }
-
-  function updateDelivery() {
-    const zone = document.getElementById('zone').value.toLowerCase();
-    let deliveryCost = 0;
-    if(zone.includes("centro")) deliveryCost = 500;
-    else if(zone.includes("norte")) deliveryCost = 800;
-    else if(zone.includes("sur")) deliveryCost = 700;
-    else deliveryCost = 0;
-    document.getElementById('delivery').textContent = deliveryCost;
-    updateTotal();
-  }
-
-  function mercadoPago() {
-    const total = document.getElementById('total').textContent;
-    window.open(`https://www.mercadopago.cl/checkout/v1/redirect?pref_id=test_${total}`, '_blank');
-  }
-
-  function transferencia() {
-    alert('Instrucciones transferencia Banco Coopeuch:\nCuenta Vista 251105735\nRUT: 12.218.473-0\nOscar Torres López');
-  }
-
-  function updateWhatsAppLink() {
-    const name = document.getElementById('name').value || "Cliente";
-    const phone = document.getElementById('phone').value || "";
-    const zone = document.getElementById('zone').value || "";
-    const address = document.getElementById('address').value || "";
-    const qty = document.getElementById('qty').value;
-    const total = document.getElementById('total').textContent;
-    const message = `Hola, soy ${name}. Quiero pedir ${qty} bolsa(s) de hielo. Zona: ${zone}. Dirección: ${address}. Total: $${total}`;
-    document.getElementById('whatsappLink').href = `https://wa.me/56927731874?text=${encodeURIComponent(message)}`;
-  }
-
+function changeQuantity(amount){
+  const qtyInput = document.getElementById('qty');
+  let qty = parseInt(qtyInput.value) + amount;
+  if(qty < 1) qty = 1;
+  qtyInput.value = qty;
   updateTotal();
+}
+
+function updateDelivery(){
+  const zone = document.getElementById('zone').value;
+  let deliveryCost = 0;
+  if(zone=="retira") deliveryCost=0;
+  else if(zone=="copiapo_centro") deliveryCost=1000;
+  else if(zone=="copiapo_alto") deliveryCost=1200;
+  else if(zone=="paipote") deliveryCost=1500;
+  else if(zone=="tamarilla") deliveryCost=2000;
+  document.getElementById('delivery').textContent = deliveryCost;
+  updateTotal();
+}
+
+function updateTotal(){
+  const qty = parseInt(document.getElementById('qty').value);
+  const delivery = parseInt(document.getElementById('delivery').textContent);
+  const subtotal = price * qty;
+  document.getElementById('subtotal').textContent = subtotal;
+  document.getElementById('total').textContent = subtotal + delivery;
+  updateWhatsAppLink();
+}
+
+function mercadoPago(){
+  window.open("https://link.mercadopago.cl/torresice",'_blank');
+}
+
+function transferencia(){
+  alert("Banco: Coopeuch\nCuenta Vista: 251105735\nRUT: 12.218.473-0\nOscar Torres López");
+}
+
+function updateWhatsAppLink(){
+  const qty = document.getElementById('qty').value;
+  const subtotal = document.getElementById('subtotal').textContent;
+  const delivery = document.getElementById('delivery').textContent;
+  const total = document.getElementById('total').textContent;
+  const name = document.getElementById('name').value || "-";
+  const phone = document.getElementById('phone').value || "-";
+  const address = document.getElementById('address').value || "-";
+  const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}`;
+  document.getElementById('whatsappLink').href = "https://wa.me/569XXXXXXXXX?text=" + encodeURIComponent(message);
+}
+
+updateDelivery();
+updateTotal();
 </script>
 
 </body>
