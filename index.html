@@ -21,8 +21,7 @@
   .form-field { margin:10px 0; }
   select, input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
-  .contact { padding:15px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
-  a.button-link { display:block; margin:5px 0; padding:10px; background-color:#0077b6; color:white; text-decoration:none; border-radius:5px; text-align:center; }
+  a.button-link { display:block; margin:5px 0; padding:12px; font-size:1rem; background-color:#25D366; color:white; text-decoration:none; border-radius:10px; text-align:center; font-weight:bold; }
   @media(min-width:600px) { .summary, .product { margin:20px auto; max-width:500px; } }
 </style>
 </head>
@@ -55,12 +54,12 @@
   <div><strong>Total: $<span id="total">500</span></strong></div>
 
   <div class="form-field">
-    <select id="zone" onchange="updateDelivery()">
-      <option value="retira">Retira Cliente - $0</option>
-      <option value="copiapo_centro">Copiapó Centro - $1.000 (+10 Bolsas Delivery Gratis)</option>
-      <option value="copiapo_alto">Copiapó Sectores Alto - $1.200 (+10 Bolsas Delivery Gratis)</option>
-      <option value="paipote">Paipote - $1.500 (+10 Bolsas Delivery Gratis)</option>
-      <option value="tamarilla">T. Amarilla - $2.000 (+15 Bolsas Delivery Gratis)</option>
+    <select id="zone" onchange="updateTotal()">
+      <option value="retira" data-cost="0" data-free="0">Retira Cliente - $0</option>
+      <option value="copiapo_centro" data-cost="1000" data-free="10">Copiapó Centro - $1.000 (+10 Bolsas Delivery Gratis)</option>
+      <option value="copiapo_alto" data-cost="1200" data-free="10">Copiapó Sectores Alto - $1.200 (+10 Bolsas Delivery Gratis)</option>
+      <option value="paipote" data-cost="1500" data-free="10">Paipote - $1.500 (+10 Bolsas Delivery Gratis)</option>
+      <option value="tamarilla" data-cost="2000" data-free="15">T. Amarilla - $2.000 (+15 Bolsas Delivery Gratis)</option>
     </select>
   </div>
 
@@ -76,8 +75,8 @@
 
   <button class="pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
   <button class="pay" onclick="transferencia()">Transferencia</button>
-  <a id="whatsappLink" href="#" target="_blank" class="button-link">📱 Enviar Comprobante/Pedido</a>
-  <a href="tel:+569XXXXXXXXX" class="button-link">📞 Llamar Ahora</a>
+  <a id="whatsappLink" href="#" target="_blank" class="button-link">📲 WhatsApp / Enviar Pedido</a>
+  <a href="tel:+569XXXXXXXXX" class="button-link" style="background-color:#0077b6;">📞 Llamar Ahora</a>
 </section>
 
 <script>
@@ -91,24 +90,22 @@ function changeQuantity(amount){
   updateTotal();
 }
 
-function updateDelivery(){
-  const zone = document.getElementById('zone').value;
-  let deliveryCost = 0;
-  if(zone=="retira") deliveryCost=0;
-  else if(zone=="copiapo_centro") deliveryCost=1000;
-  else if(zone=="copiapo_alto") deliveryCost=1200;
-  else if(zone=="paipote") deliveryCost=1500;
-  else if(zone=="tamarilla") deliveryCost=2000;
-  document.getElementById('delivery').textContent = deliveryCost;
-  updateTotal();
-}
-
 function updateTotal(){
   const qty = parseInt(document.getElementById('qty').value);
-  const delivery = parseInt(document.getElementById('delivery').textContent);
+  const zoneSelect = document.getElementById('zone');
+  const zoneOption = zoneSelect.options[zoneSelect.selectedIndex];
+  let deliveryCost = parseInt(zoneOption.dataset.cost);
+  const freeBags = parseInt(zoneOption.dataset.free);
+
+  // Delivery Gratis si se supera la cantidad de bolsas
+  if(qty >= freeBags && freeBags > 0){
+    deliveryCost = 0;
+  }
+
   const subtotal = price * qty;
   document.getElementById('subtotal').textContent = subtotal;
-  document.getElementById('total').textContent = subtotal + delivery;
+  document.getElementById('delivery').textContent = deliveryCost;
+  document.getElementById('total').textContent = subtotal + deliveryCost;
   updateWhatsAppLink();
 }
 
@@ -128,11 +125,11 @@ function updateWhatsAppLink(){
   const name = document.getElementById('name').value || "-";
   const phone = document.getElementById('phone').value || "-";
   const address = document.getElementById('address').value || "-";
+
   const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}`;
   document.getElementById('whatsappLink').href = "https://wa.me/569XXXXXXXXX?text=" + encodeURIComponent(message);
 }
 
-updateDelivery();
 updateTotal();
 </script>
 
