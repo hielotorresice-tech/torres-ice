@@ -5,23 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ice Towers - Venta de Hielo</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:#f0f8ff; color:#000; }
-  header { display:flex; flex-direction:column; align-items:center; padding:15px 10px; background-color:#fff; border-bottom:2px solid #ccc; }
+  body {
+    font-family: Arial, sans-serif;
+    margin:0;
+    padding:0;
+    background: url('fondo-hielo.png') no-repeat center center fixed;
+    background-size: cover;
+    color:#000;
+  }
+  header { display:flex; flex-direction:column; align-items:center; padding:15px 10px; background-color:rgba(255,255,255,0.9); border-bottom:2px solid #ccc; }
   header img { height:80px; max-width:90%; margin-bottom:10px; }
   header h1 { font-size:1.3rem; margin:0; text-align:center; }
-  .info { padding:10px; background-color:#e0f7ff; font-size:0.9rem; text-align:center; }
+  .info { padding:10px; background-color:rgba(224,247,255,0.9); font-size:0.9rem; text-align:center; }
   .product { padding:15px; text-align:center; }
   .product h2 { margin:10px 0; font-size:1.3rem; }
   .price { font-size:1.5rem; margin:10px 0; color:#0077b6; }
   .quantity { display:flex; justify-content:center; align-items:center; margin:10px 0; }
   .quantity button { width:35px; height:35px; font-size:1.2rem; margin:0 5px; cursor:pointer; }
   input[type="number"] { width:60px; text-align:center; font-size:1rem; }
-  .summary { padding:15px; background-color:#fff; margin:10px auto; border-radius:10px; max-width:400px; text-align:center; }
+  .summary { padding:15px; background-color:rgba(255,255,255,0.95); margin:10px auto; border-radius:10px; max-width:400px; text-align:center; }
   .summary div { margin:5px 0; font-size:1rem; }
   .form-field { margin:10px 0; }
   select, input[type="text"], input[type="tel"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; }
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
   a.button-link { display:block; margin:5px 0; padding:12px; font-size:1rem; background-color:#25D366; color:white; text-decoration:none; border-radius:10px; text-align:center; font-weight:bold; }
+  .call-link { background-color:#0077b6; }
+  /* Modal Transferencia */
+  .modal {
+    display:none;
+    position: fixed;
+    z-index: 1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .modal-content {
+    background-color:#fff;
+    margin: 15% auto;
+    padding:20px;
+    border-radius:10px;
+    width:80%;
+    max-width:400px;
+    text-align:center;
+    position: relative;
+  }
+  .close {
+    position:absolute;
+    top:10px;
+    right:15px;
+    color:#aaa;
+    font-size:28px;
+    font-weight:bold;
+    cursor:pointer;
+  }
   @media(min-width:600px) { .summary, .product { margin:20px auto; max-width:500px; } }
 </style>
 </head>
@@ -74,64 +113,22 @@
   </div>
 
   <button class="pay" onclick="mercadoPago()">💳 Pagar con Mercado Pago</button>
-  <button class="pay" onclick="transferencia()">Transferencia</button>
-  <a id="whatsappLink" href="#" target="_blank" class="button-link">📲 WhatsApp / Enviar Pedido</a>
-  <a href="tel:+56927731874" class="button-link" style="background-color:#0077b6;">📞 Llamar Ahora</a>
+  <button class="pay" onclick="openTransfer()">Transferencia</button>
+  <a id="whatsappLink" href="#" target="_blank" class="button-link">📲 WhatsApp - Envío comprobante</a>
+  <a href="tel:+56927731874" class="button-link call-link">📞 Llamar Ahora</a>
 </section>
 
+<!-- Modal Transferencia -->
+<div id="modalTransfer" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeTransfer()">&times;</span>
+    <h2>Datos Transferencia</h2>
+    <p>Banco: Coopeuch<br>
+       Cuenta Vista: 251105735<br>
+       RUT: 12.218.473-0<br>
+       Oscar Torres López</p>
+  </div>
+</div>
+
 <script>
-const price = 500;
-
-function changeQuantity(amount){
-  const qtyInput = document.getElementById('qty');
-  let qty = parseInt(qtyInput.value) + amount;
-  if(qty < 1) qty = 1;
-  qtyInput.value = qty;
-  updateTotal();
-}
-
-function updateTotal(){
-  const qty = parseInt(document.getElementById('qty').value);
-  const zoneSelect = document.getElementById('zone');
-  const zoneOption = zoneSelect.options[zoneSelect.selectedIndex];
-  let deliveryCost = parseInt(zoneOption.dataset.cost);
-  const freeBags = parseInt(zoneOption.dataset.free);
-
-  // Delivery Gratis si se supera la cantidad de bolsas
-  if(qty >= freeBags && freeBags > 0){
-    deliveryCost = 0;
-  }
-
-  const subtotal = price * qty;
-  document.getElementById('subtotal').textContent = subtotal;
-  document.getElementById('delivery').textContent = deliveryCost;
-  document.getElementById('total').textContent = subtotal + deliveryCost;
-  updateWhatsAppLink();
-}
-
-function mercadoPago(){
-  window.open("https://link.mercadopago.cl/torresice",'_blank');
-}
-
-function transferencia(){
-  alert("Banco: Coopeuch\nCuenta Vista: 251105735\nRUT: 12.218.473-0\nOscar Torres López");
-}
-
-function updateWhatsAppLink(){
-  const qty = document.getElementById('qty').value;
-  const subtotal = document.getElementById('subtotal').textContent;
-  const delivery = document.getElementById('delivery').textContent;
-  const total = document.getElementById('total').textContent;
-  const name = document.getElementById('name').value || "-";
-  const phone = document.getElementById('phone').value || "-";
-  const address = document.getElementById('address').value || "-";
-
-  const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}`;
-  document.getElementById('whatsappLink').href = "https://wa.me/56927731874?text=" + encodeURIComponent(message);
-}
-
-updateTotal();
-</script>
-
-</body>
-</html>
+const price = 50
