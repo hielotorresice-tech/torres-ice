@@ -30,7 +30,8 @@
   button.pay { background-color:#ff6b00; color:white; padding:12px; width:100%; font-size:1.1rem; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
   a.button-link { display:block; margin:5px 0; padding:12px; font-size:1rem; background-color:#25D366; color:white; text-decoration:none; border-radius:10px; text-align:center; font-weight:bold; }
   .call-link { background-color:#0077b6; }
-  /* Modal Transferencia */
+
+  /* Modal Transferencia centrado */
   .modal {
     display:none;
     position: fixed;
@@ -41,10 +42,12 @@
     height:100%;
     overflow:auto;
     background-color: rgba(0,0,0,0.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
   .modal-content {
     background-color:#fff;
-    margin: 15% auto;
     padding:20px;
     border-radius:10px;
     width:80%;
@@ -61,6 +64,7 @@
     font-weight:bold;
     cursor:pointer;
   }
+
   @media(min-width:600px) { .summary, .product { margin:20px auto; max-width:500px; } }
 </style>
 </head>
@@ -131,4 +135,65 @@
 </div>
 
 <script>
-const price = 50
+const price = 500;
+
+function changeQuantity(amount){
+  const qtyInput = document.getElementById('qty');
+  let qty = parseInt(qtyInput.value) + amount;
+  if(qty < 1) qty = 1;
+  qtyInput.value = qty;
+  updateTotal();
+}
+
+function updateTotal(){
+  const qty = parseInt(document.getElementById('qty').value);
+  const zoneSelect = document.getElementById('zone');
+  const zoneOption = zoneSelect.options[zoneSelect.selectedIndex];
+  let deliveryCost = parseInt(zoneOption.dataset.cost);
+  const freeBags = parseInt(zoneOption.dataset.free);
+
+  if(qty >= freeBags && freeBags > 0){ deliveryCost = 0; }
+
+  const subtotal = price * qty;
+  document.getElementById('subtotal').textContent = subtotal;
+  document.getElementById('delivery').textContent = deliveryCost;
+  document.getElementById('total').textContent = subtotal + deliveryCost;
+  updateWhatsAppLink();
+}
+
+function mercadoPago(){
+  window.open("https://link.mercadopago.cl/torresice",'_blank');
+}
+
+function openTransfer(){
+  document.getElementById('modalTransfer').style.display = "flex";
+}
+
+function closeTransfer(){
+  document.getElementById('modalTransfer').style.display = "none";
+}
+
+function updateWhatsAppLink(){
+  const qty = document.getElementById('qty').value;
+  const subtotal = document.getElementById('subtotal').textContent;
+  const delivery = document.getElementById('delivery').textContent;
+  const total = document.getElementById('total').textContent;
+  const name = document.getElementById('name').value || "-";
+  const phone = document.getElementById('phone').value || "-";
+  const address = document.getElementById('address').value || "-";
+
+  const message = `Hola, quiero pedir hielo Torres Ice ❄️\n\nCantidad: ${qty} bolsas\nSubtotal: $${subtotal}\nDelivery: $${delivery}\nTotal: $${total}\n\nCliente: ${name}\nCelular: ${phone}\nDirección: ${address}`;
+  document.getElementById('whatsappLink').href = "https://wa.me/56927731874?text=" + encodeURIComponent(message);
+}
+
+// Cerrar modal al hacer click fuera
+window.onclick = function(event){
+  const modal = document.getElementById('modalTransfer');
+  if(event.target == modal){ modal.style.display = "none"; }
+}
+
+updateTotal();
+</script>
+
+</body>
+</html>
