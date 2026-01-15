@@ -248,10 +248,10 @@ Subtotal: $${sub}
 Delivery: $${del}
 Total: $${tot}
 
-Cliente: ${document.getElementById("customerName").value || "-"}
-Celular: ${phone.value||"-"}
-Dirección: ${address.value||"-"}
-E-mail: ${email.value||"-"}
+Cliente: ${customerName}
+Celular: ${phone.value || "-"}
+Dirección: ${address.value || "-"}
+E-mail: ${email.value || "-"}
 `;
 
   whatsapp.href="https://wa.me/56927731874?text="+encodeURIComponent(msg);
