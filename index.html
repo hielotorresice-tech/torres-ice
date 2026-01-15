@@ -220,6 +220,37 @@ function changeQty(v){
   const q = document.getElementById("qty");
   q.value = Math.max(1, parseInt(q.value) + v);
   updateAll();
+function sendAdminAlert(){
+  const q = parseInt(document.getElementById("qty").value, 10);
+  const z = document.getElementById("zone").selectedOptions[0].text;
+  const sub = document.getElementById("subtotal").innerText;
+  const del = document.getElementById("delivery").innerText;
+  const tot = document.getElementById("total").innerText;
+
+  const name = document.getElementById("customerName").value.trim() || "-";
+  const phone = document.getElementById("phone").value.trim() || "-";
+  const address = document.getElementById("address").value.trim() || "-";
+  const email = document.getElementById("email").value.trim() || "-";
+
+  const msgAdmin = `
+🧊 *NUEVO PEDIDO – TORRES ICE* ❄️
+
+Cantidad: ${q} bolsas
+Zona: ${z}
+Subtotal: $${sub}
+Delivery: $${del}
+Total: $${tot}
+
+Cliente: ${name}
+Celular: ${phone}
+Dirección: ${address}
+E-mail: ${email}
+`;
+
+  window.open(
+    "https://wa.me/56927731874?text=" + encodeURIComponent(msgAdmin),
+    "_blank"
+  );
 }
 
 function deliveryCost(q, z){
