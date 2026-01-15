@@ -1,9 +1,10 @@
 {
   "name": "Torres Ice - Venta de Hielo",
   "short_name": "Torres Ice",
-  "start_url": "index.html",
+  "start_url": "/torres-ice/",
+  "scope": "/torres-ice/",
   "display": "standalone",
-  "background_color": "#e0f7fa",
+  "background_color": "#ffffff",
   "theme_color": "#0bbcd6",
   "orientation": "portrait",
   "icons": [
