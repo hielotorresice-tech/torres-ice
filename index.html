@@ -295,6 +295,14 @@ function closeTransferencia() {
   );
 }
 
+window.addEventListener("click", function (e) {
+  const modal = document.getElementById("transferenciaModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+});
+  
 </script>
 
 </div>
