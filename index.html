@@ -281,7 +281,20 @@ function closeTransferencia() {
   modal.style.display = "none";
   document.body.style.overflow = "auto";
 }
-  
+  function pagarMercadoPago() {
+  // Cerrar cualquier modal activo
+  const modal = document.getElementById("transferenciaModal");
+  if (modal) modal.style.display = "none";
+
+  document.body.style.overflow = "auto";
+
+  // Abrir Mercado Pago
+  window.open(
+    "https://link.mercadopago.cl/torresice",
+    "_blank"
+  );
+}
+
 </script>
 
 </div>
