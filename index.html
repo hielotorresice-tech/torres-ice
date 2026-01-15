@@ -20,38 +20,58 @@ body{
   margin:auto;
   min-height:100vh;
   background:rgba(255,255,255,0.78);
-  backdrop-filter:blur(6px);
+  backdrop-filter:blur(4px);
   padding:16px;
 }
 
 header{
   text-align:center;
-  margin-bottom:10px;
+  margin-bottom:14px;
+}
+
+header img{
+  width:90px;
+  margin-bottom:6px;
 }
 
 header h1{
-  margin:6px 0;
+  margin:4px 0;
   font-size:20px;
+}
+
+header small{
+  display:block;
+  font-size:13px;
 }
 
 .card{
   background:rgba(255,255,255,0.9);
-  border-radius:14px;
+  border-radius:16px;
   padding:16px;
+  text-align:center;
+}
+
+h2,h3,p{
+  margin:6px 0;
 }
 
 .qty{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:10px;
-  margin:10px 0;
+  gap:12px;
+  margin:12px 0;
 }
 
 .qty button{
-  width:40px;
-  height:40px;
+  width:36px;
+  height:36px;
   font-size:20px;
+}
+
+.qty input{
+  width:60px;
+  text-align:center;
 }
 
 input, select{
@@ -63,8 +83,8 @@ input, select{
 }
 
 .summary{
+  margin-top:14px;
   text-align:center;
-  margin-top:12px;
 }
 
 .summary p{
@@ -75,16 +95,33 @@ input, select{
   width:100%;
   padding:14px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   font-size:16px;
   margin-top:10px;
   cursor:pointer;
 }
 
-.mp{ background:#009ee3; color:#fff; }
-.tr{ background:#666; color:#fff; }
-.wa{ background:#25D366; color:#fff; font-weight:bold; }
-.call{ background:#ff9800; color:#fff; }
+.mp{
+  background:#FFD400;
+  color:#0056A3;
+  font-weight:bold;
+}
+
+.tr{
+  background:#0072CE;
+  color:#fff;
+}
+
+.wa{
+  background:#25D366;
+  color:#003366;
+  font-weight:bold;
+}
+
+.call{
+  background:#0288D1;
+  color:#fff;
+}
 
 .modal{
   display:none;
@@ -112,13 +149,16 @@ input, select{
 <div class="app">
 
 <header>
+  <img src="logo.png" alt="Torres Ice">
   <h1>Venta de Hielo · Copiapó</h1>
   <small>🕘 09:00 a 22:00 · 🚚 Delivery disponible</small>
 </header>
 
 <div class="card">
 
-<strong>Bolsa de Hielo 1 Kg ($500)</strong>
+<h2>Bolsa de Hielo</h2>
+<h3>Formato 1 Kg</h3>
+<h3>$500</h3>
 
 <div class="qty">
   <button onclick="changeQty(-1)">−</button>
@@ -126,23 +166,24 @@ input, select{
   <button onclick="changeQty(1)">+</button>
 </div>
 
+<p><strong>Zona de entrega</strong></p>
 <select id="zone" onchange="updateAll()">
-  <option value="retiro">Retiro Cliente ($0)</option>
-  <option value="centro">Copiapó Centro ($1000)</option>
-  <option value="alto">Sectores Alto ($1200)</option>
-  <option value="paipote">Paipote ($1500)</option>
-  <option value="tierra">Tierra Amarilla ($2000)</option>
+  <option value="retiro">Retiro Cliente – $0</option>
+  <option value="centro">Copiapó Centro – $1.000 (+10 bolsas $0)</option>
+  <option value="alto">Sectores Alto – $1.200 (+10 bolsas $0)</option>
+  <option value="paipote">Paipote – $1.500 (+10 bolsas $0)</option>
+  <option value="tierra">Tierra Amarilla – $2.000 (+15 bolsas $0)</option>
 </select>
 
-<input id="name" placeholder="Cliente" oninput="updateAll()">
+<input id="name" placeholder="Nombre del Cliente" oninput="updateAll()">
 <input id="phone" placeholder="Celular" oninput="updateAll()">
 <input id="address" placeholder="Dirección" oninput="updateAll()">
 <input id="email" placeholder="E-mail" oninput="updateAll()">
 
 <div class="summary">
-  <p>Subtotal: $<span id="subtotal">500</span></p>
-  <p>Delivery: $<span id="delivery">0</span></p>
-  <p><strong>Total: $<span id="total">500</span></strong></p>
+  <p>Subtotal : $<span id="subtotal">500</span></p>
+  <p>Delivery : $<span id="delivery">0</span></p>
+  <p><strong>Total : $<span id="total">500</span></strong></p>
 </div>
 
 <button class="btn mp" onclick="pagarMP()">💳 Mercado Pago</button>
@@ -160,11 +201,11 @@ input, select{
 </div>
 
 <div id="transfer" class="modal" style="display:none"
-     onclick="if(event.target.id==='transfer')closeTransfer()">
+onclick="if(event.target.id==='transfer')closeTransfer()">
   <div class="modal-box">
     <h3>Datos para Transferir</h3>
     <p>Banco: Coopeuch</p>
-    <p>Cuenta: 251105735</p>
+    <p>Cuenta Vista: 251105735</p>
     <p>RUT: 12.218.473-0</p>
     <p>Oscar Torres López</p>
     <p>Email: hielo.torres.ice@gmail.com</p>
@@ -182,26 +223,23 @@ function changeQty(v){
 }
 
 function deliveryCost(q, z){
-  const map = { retiro:0, centro:1000, alto:1200, paipote:1500, tierra:2000 };
-  if(q >= 10) return 0;
-  return map[z] || 0;
+  if(q >= 15 && z==="tierra") return 0;
+  if(q >= 10 && z!=="retiro") return 0;
+  const map={retiro:0,centro:1000,alto:1200,paipote:1500,tierra:2000};
+  return map[z]||0;
 }
 
 function updateAll(){
   const q = +qty.value;
   const z = zone.value;
   const sub = q * price;
-  const del = deliveryCost(q, z);
+  const del = deliveryCost(q,z);
   const tot = sub + del;
 
-  subtotal.innerText = sub;
-  delivery.innerText = del;
-  total.innerText = tot;
+  subtotal.innerText=sub;
+  delivery.innerText=del;
+  total.innerText=tot;
 
-  updateWhatsApp(q, sub, del, tot);
-}
-
-function updateWhatsApp(q, sub, del, tot){
   const msg = `
 Hola, quiero pedir hielo Torres Ice ❄️
 
@@ -210,12 +248,13 @@ Subtotal: $${sub}
 Delivery: $${del}
 Total: $${tot}
 
-Cliente: ${name.value || "-"}
-Celular: ${phone.value || "-"}
-Dirección: ${address.value || "-"}
-E-mail: ${email.value || "-"}
+Cliente: ${name.value||"-"}
+Celular: ${phone.value||"-"}
+Dirección: ${address.value||"-"}
+E-mail: ${email.value||"-"}
 `;
-  whatsapp.href = "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
+
+  whatsapp.href="https://wa.me/56927731874?text="+encodeURIComponent(msg);
 }
 
 function pagarMP(){
@@ -233,11 +272,6 @@ function closeTransfer(){
 }
 
 updateAll();
-
-  window.onload = () => {
-  document.getElementById("transfer").style.display = "none";
-};
-
 </script>
 
 </body>
