@@ -248,7 +248,7 @@ Subtotal: $${sub}
 Delivery: $${del}
 Total: $${tot}
 
-Cliente: ${name.value||"-"}
+Cliente: ${document.getElementById("customerName").value || "-"}
 Celular: ${phone.value||"-"}
 Dirección: ${address.value||"-"}
 E-mail: ${email.value||"-"}
