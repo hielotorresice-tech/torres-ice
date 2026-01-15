@@ -1,1 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torres Ice - Venta de Hielo</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0bbcd6">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("fondo-hielo.png") center/cover no-repeat fixed;
+    }
+
+    .app {
+      min-height: 100vh;
+      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.75);
+      padding: 16px;
+      max-width: 420px;
+      margin: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    header img {
+      width: 90px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 4px 0;
+    }
+
+    .info {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.85);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .qty {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .qty button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .summary {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .summary p {
+      margin: 4px 0;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .btn-mp { background: #009ee3; color: #fff; }
+    .btn-transfer { background: #666; color: #fff; }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      position: relative;
+      z-index: 20;
+    }
+
+    .btn-call {
+      background: #ff9800;
+      color: #fff;
+      margin-top: 12px;
+      z-index: 10;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .close-btn {
+      border: none;
+      background: none;
+      font-size: 20px;
+      float: right;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <img src="logo.png" alt="Torres Ice">
+    <h1>Venta de Hielo · Copiapó</h1>
+    <div class="info">🕘 09:00 a 22:00 · 🚚 Delivery disponible</div>
+  </header>
+
+  <div class="card">
+    <strong>Bolsa de Hielo 1 Kg</strong>
+    <div class="qty">
+      <button onclick="changeQty(-1)">−</button>
+      <input id="quantity" type="number" value="1" min="1" readonly>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <select id="zone" onchange="updateAll()">
+      <option value="retiro">Retira Cliente ($0)</option>
+      <option value="centro">Copiapó Centro ($1000)</option>
+      <option value="alto">Copiapó Sectores Alto ($1200)</option>
+      <option value="paipote">Paipote ($1500)</option>
+      <option value="tierra">Tierra Amarilla ($2000)</option>
+    </select>
+
+    <input id="name" placeholder="Cliente" oninput="updateAll()">
+    <input id="phone" placeholder="Celular" oninput="updateAll()">
+    <input id="address" placeholder="Dirección" oninput="updateAll()">
+    <input id="email" placeholder="E-mail" oninput="updateAll()">
+
+    <div class="summary">
+      <p>Subtotal: $<span id="subtotal">500</span></p>
+      <p>Delivery: $<span id="delivery">0</span></p>
+      <p><strong>Total: $<span id="total">500</span></strong></p>
+    </div>
+
+    <button class="btn btn-mp" onclick="pagarMP()">💳 Mercado Pago</button>
+    <button class="btn btn-transfer" onclick="openTransfer()">Transferencia</button>
+
+    <a id="whatsappBtn" class="btn btn-whatsapp" target="_blank">
+      📲 WhatsApp - Envío comprobante
+    </a>
+
+    <button class="btn btn-call" onclick="location.href='tel:+56927731874'">
+      📞 Llamar Ahora
+    </button>
+  </div>
+
+</div>
+
+<!-- MODAL TRANSFERENCIA -->
+<div id="transferModal" class="modal" onclick="closeModal(event)">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeAll()">✖</button>
+    <h3>Datos para Transferir</h3>
+    <p>Banco: Coopeuch</p>
+    <p>Cuenta Vista: 251105735</p>
+    <p>RUT: 12.218.473-0</p>
+    <p>Oscar Torres López</p>
+    <p>Email: hielo.torres.ice@gmail.com</p>
+  </div>
+</div>
+
+<script>
+const price = 500;
+
+function changeQty(v) {
+  const q = document.getElementById("quantity");
+  q.value = Math.max(1, parseInt(q.value) + v);
+  updateAll();
+}
+
+function calcDelivery(q, z) {
+  const map = { retiro:0, centro:1000, alto:1200, paipote:1500, tierra:2000 };
+  if (q >= 10) return 0;
+  return map[z] || 0;
+}
+
+function updateAll() {
+  const q = +quantity.value;
+  const zone = zoneSelect.value = document.getElementById("zone").value;
+  const delivery = calcDelivery(q, zone);
+  const subtotal = q * price;
+  const total = subtotal + delivery;
+
+  subtotalEl.innerText = subtotal;
+  deliveryEl.innerText = delivery;
+  totalEl.innerText = total;
+
+  updateWhatsApp(q, subtotal, delivery, total);
+}
+
+const subtotalEl = document.getElementById("subtotal");
+const deliveryEl = document.getElementById("delivery");
+const totalEl = document.getElementById("total");
+
+function updateWhatsApp(q, sub, del, tot) {
+  const msg = `
+Hola, quiero pedir hielo Torres Ice ❄️
+
+Cantidad: ${q} bolsas
+Subtotal: $${sub}
+Delivery: $${del}
+Total: $${tot}
+
+Cliente: ${name.value || "-"}
+Celular: ${phone.value || "-"}
+Dirección: ${address.value || "-"}
+E-mail: ${email.value || "-"}
+`;
+  whatsappBtn.href = "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
+}
+
+function pagarMP() {
+  closeAll();
+  window.open("https://link.mercadopago.cl/torresice", "_blank");
+}
+
+function openTransfer() {
+  document.getElementById("transferModal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeAll() {
+  document.getElementById("transferModal").style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+function closeModal(e) {
+  if (e.target.id === "transferModal") closeAll();
+}
+
+updateAll();
+</script>
+
+</body>
+</html>
