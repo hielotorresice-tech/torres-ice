@@ -230,15 +230,21 @@ function deliveryCost(q, z){
 }
 
 function updateAll(){
-  const q = +qty.value;
-  const z = zone.value;
+  const q = parseInt(document.getElementById("qty").value, 10);
+  const z = document.getElementById("zone").value;
+
   const sub = q * price;
   const del = deliveryCost(q,z);
   const tot = sub + del;
 
-  subtotal.innerText=sub;
-  delivery.innerText=del;
-  total.innerText=tot;
+  document.getElementById("subtotal").innerText = sub;
+  document.getElementById("delivery").innerText = del;
+  document.getElementById("total").innerText = tot;
+
+  const customerName = document.getElementById("customerName").value.trim() || "-";
+  const phoneVal = document.getElementById("phone").value.trim() || "-";
+  const addressVal = document.getElementById("address").value.trim() || "-";
+  const emailVal = document.getElementById("email").value.trim() || "-";
 
   const msg = `
 Hola, quiero pedir hielo Torres Ice ❄️
@@ -249,12 +255,13 @@ Delivery: $${del}
 Total: $${tot}
 
 Cliente: ${customerName}
-Celular: ${phone.value || "-"}
-Dirección: ${address.value || "-"}
-E-mail: ${email.value || "-"}
+Celular: ${phoneVal}
+Dirección: ${addressVal}
+E-mail: ${emailVal}
 `;
 
-  whatsapp.href="https://wa.me/56927731874?text="+encodeURIComponent(msg);
+  document.getElementById("whatsapp").href =
+    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
 function pagarMP(){
