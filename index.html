@@ -234,7 +234,7 @@ function sendAdminAlert(){
   const email = document.getElementById("email").value.trim() || "-";
 
   const msgAdmin = `
-🧊 *NUEVO PEDIDO – TORRES ICE* ❄️
+🧊 NUEVO PEDIDO – TORRES ICE ❄️
 
 Cantidad: ${q} bolsas
 Zona: ${z}
@@ -248,10 +248,8 @@ Dirección: ${address}
 E-mail: ${email}
 `;
 
-  window.open(
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msgAdmin),
-    "_blank"
-  );
+  location.href =
+    "https://wa.me/56927731874?text=" + encodeURIComponent(msgAdmin);
 }
 
 function deliveryCost(q, z){
