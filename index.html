@@ -220,6 +220,7 @@ function changeQty(v){
   const q = document.getElementById("qty");
   q.value = Math.max(1, parseInt(q.value) + v);
   updateAll();
+}
 function sendAdminAlert(){
   const q = parseInt(document.getElementById("qty").value, 10);
   const z = document.getElementById("zone").selectedOptions[0].text;
