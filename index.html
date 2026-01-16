@@ -214,43 +214,14 @@ onclick="if(event.target.id==='transfer')closeTransfer()">
 </div>
 
 <script>
+<script>
 const price = 500;
+let deferredPrompt;
 
 function changeQty(v){
   const q = document.getElementById("qty");
   q.value = Math.max(1, parseInt(q.value) + v);
   updateAll();
-}
-
-function sendAdminAlert(){
-  const q = parseInt(document.getElementById("qty").value, 10);
-  const z = document.getElementById("zone").selectedOptions[0].text;
-  const sub = document.getElementById("subtotal").innerText;
-  const del = document.getElementById("delivery").innerText;
-  const tot = document.getElementById("total").innerText;
-
-  const name = document.getElementById("customerName").value.trim() || "-";
-  const phone = document.getElementById("phone").value.trim() || "-";
-  const address = document.getElementById("address").value.trim() || "-";
-  const email = document.getElementById("email").value.trim() || "-";
-
-  const msgAdmin = `
-🧊 NUEVO PEDIDO – TORRES ICE ❄️
-
-Cantidad: ${q} bolsas
-Zona: ${z}
-Subtotal: $${sub}
-Delivery: $${del}
-Total: $${tot}
-
-Cliente: ${name}
-Celular: ${phone}
-Dirección: ${address}
-E-mail: ${email}
-`;
-
-  location.href =
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msgAdmin);
 }
 
 function deliveryCost(q, z){
@@ -300,27 +271,48 @@ function pagarMP(){
 }
 
 function openTransfer(){
-  transfer.style.display="flex";
+  document.getElementById("transfer").style.display="flex";
   document.body.style.overflow="hidden";
 }
 
 function closeTransfer(){
-  transfer.style.display="none";
+  document.getElementById("transfer").style.display="none";
   document.body.style.overflow="auto";
 }
 
-updateAll();
+// ⚡ AVISO INSTALAR APP
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!localStorage.getItem('installDismissed')) {
+    document.getElementById('installBanner').style.display = 'block';
+  }
+});
 
-// 🔹 REGISTRO SERVICE WORKER (PWA)
+document.getElementById('installBtn').onclick = async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('installBanner').style.display = 'none';
+  }
+};
+
+document.getElementById('closeInstall').onclick = () => {
+  document.getElementById('installBanner').style.display = 'none';
+  localStorage.setItem('installDismissed', 'yes');
+};
+
+// 🔹 SERVICE WORKER
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .then(reg => console.log("Service Worker OK:", reg.scope))
-      .catch(err => console.error("SW error:", err));
+    navigator.serviceWorker.register("./sw.js");
   });
 }
 
-<script>
+updateAll();
+</script>
+
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
