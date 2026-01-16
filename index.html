@@ -213,6 +213,15 @@ onclick="if(event.target.id==='transfer')closeTransfer()">
   </div>
 </div>
 
+// 🔹 REGISTRO SERVICE WORKER (PWA)
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(reg => console.log("Service Worker OK:", reg.scope))
+      .catch(err => console.error("SW error:", err));
+  });
+}
+
 <script>
 const price = 500;
 
