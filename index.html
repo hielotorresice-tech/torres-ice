@@ -168,11 +168,11 @@ input, select{
 
 <p><strong>Zona de entrega</strong></p>
 <select id="zone" onchange="updateAll()">
-  <option value="retiro">Retiro Cliente – $0</option>
+  <option value="retiro">Retira Cliente – $0</option>
   <option value="centro">Copiapó Centro – $1.000 (+10 bolsas $0)</option>
-  <option value="alto">Sectores Alto – $1.200 (+10 bolsas $0)</option>
-  <option value="paipote">Paipote – $1.500 (+10 bolsas $0)</option>
-  <option value="tierra">Tierra Amarilla – $2.000 (+15 bolsas $0)</option>
+  <option value="alrededores">Copiapó Alrededores – $1.200 (+10 bolsas $0)</option>
+  <option value="paipote">Paipote Los Llanos – $1.500 (+15 bolsas $0)</option>
+  <option value="tierra">Tierra Amarilla – $2.000 (+20 bolsas $0)</option>
 </select>
 
 <input id="customerName" placeholder="Nombre del Cliente" oninput="updateAll()">
@@ -224,10 +224,29 @@ function changeQty(v){
 }
 
 function deliveryCost(q, z){
-  if(q >= 15 && z==="tierra") return 0;
-  if(q >= 10 && z!=="retiro") return 0;
-  const map={retiro:0,centro:1000,alto:1200,paipote:1500,tierra:2000};
-  return map[z]||0;
+  if (z === "retiro") return 0;
+
+  if (z === "centro") {
+    if (q >= 10) return 0;
+    return 1000;
+  }
+
+  if (z === "alrededores") {
+    if (q >= 10) return 0;
+    return 1200;
+  }
+
+  if (z === "paipote") {
+    if (q >= 15) return 0;
+    return 1500;
+  }
+
+  if (z === "tierra") {
+    if (q >= 20) return 0;
+    return 2000;
+  }
+
+  return 0;
 }
 
 function updateAll(){
