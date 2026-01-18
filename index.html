@@ -227,6 +227,12 @@ window.addEventListener("beforeinstallprompt", (e) => {
   }
 });
 
+/* ✅ CUANDO LA APP YA SE INSTALÓ */
+window.addEventListener("appinstalled", () => {
+  localStorage.setItem("installDismissed", "yes");
+  document.getElementById("installBanner").style.display = "none";
+});
+  
 function changeQty(v){
   const q = document.getElementById("qty");
   q.value = Math.max(1, parseInt(q.value) + v);
