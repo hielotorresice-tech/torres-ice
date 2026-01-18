@@ -227,7 +227,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
   }
 });
 
-/* ✅ CUANDO LA APP YA SE INSTALÓ */
+/* ✅ CUANDO LA APP SE INSTALA */
 window.addEventListener("appinstalled", () => {
   localStorage.setItem("installDismissed", "yes");
   document.getElementById("installBanner").style.display = "none";
