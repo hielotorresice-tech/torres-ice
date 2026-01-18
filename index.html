@@ -273,21 +273,6 @@ Total: $${tot}
     "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
-/* 🟦 AVISO INSTALAR APP */
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  window.addEventListener('appinstalled', () => {
-  localStorage.setItem('installDismissed', 'yes');
-  document.getElementById('installBanner').style.display = 'none';
-});
-
-  if (!localStorage.getItem("installDismissed")) {
-    document.getElementById("installBanner").style.display = "block";
-  }
-});
-
 window.addEventListener("load", () => {
   document.getElementById("installBtn").onclick = async () => {
     if (!deferredPrompt) {
