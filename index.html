@@ -215,7 +215,17 @@ onclick="if(event.target.id==='transfer')closeTransfer()">
 
 <script>
 const price = 500;
-let deferredPrompt = null;
+let deferredPrompt;
+
+/* 🟦 AVISO INSTALAR APP */
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  if (!localStorage.getItem("installDismissed")) {
+    document.getElementById("installBanner").style.display = "block";
+  }
+});
 
 function changeQty(v){
   const q = document.getElementById("qty");
@@ -261,6 +271,11 @@ Total: $${tot}
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
+
+  window.addEventListener('appinstalled', () => {
+  localStorage.setItem('installDismissed', 'yes');
+  document.getElementById('installBanner').style.display = 'none';
+});
 
   if (!localStorage.getItem("installDismissed")) {
     document.getElementById("installBanner").style.display = "block";
