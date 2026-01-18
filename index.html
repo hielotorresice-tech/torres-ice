@@ -215,8 +215,7 @@ onclick="if(event.target.id==='transfer')closeTransfer()">
 
 <script>
 const price = 500;
-
-let deferredPrompt;
+let deferredPrompt = null;
 
 function changeQty(v){
   const q = document.getElementById("qty");
@@ -224,30 +223,12 @@ function changeQty(v){
   updateAll();
 }
 
-
 function deliveryCost(q, z){
   if (z === "retiro") return 0;
-
-  if (z === "centro") {
-    if (q >= 10) return 0;
-    return 1000;
-  }
-
-  if (z === "alrededores") {
-    if (q >= 10) return 0;
-    return 1200;
-  }
-
-  if (z === "paipote") {
-    if (q >= 15) return 0;
-    return 1500;
-  }
-
-  if (z === "tierra") {
-    if (q >= 20) return 0;
-    return 2000;
-  }
-
+  if (z === "centro") return q >= 10 ? 0 : 1000;
+  if (z === "alrededores") return q >= 10 ? 0 : 1200;
+  if (z === "paipote") return q >= 15 ? 0 : 1500;
+  if (z === "tierra") return q >= 20 ? 0 : 2000;
   return 0;
 }
 
@@ -263,11 +244,6 @@ function updateAll(){
   document.getElementById("delivery").innerText = del;
   document.getElementById("total").innerText = tot;
 
-  const customerName = document.getElementById("customerName").value.trim() || "-";
-  const phoneVal = document.getElementById("phone").value.trim() || "-";
-  const addressVal = document.getElementById("address").value.trim() || "-";
-  const emailVal = document.getElementById("email").value.trim() || "-";
-
   const msg = `
 Hola, quiero pedir hielo Torres Ice ❄️
 
@@ -275,55 +251,41 @@ Cantidad: ${q} bolsas
 Subtotal: $${sub}
 Delivery: $${del}
 Total: $${tot}
-
-Cliente: ${customerName}
-Celular: ${phoneVal}
-Dirección: ${addressVal}
-E-mail: ${emailVal}
 `;
 
   document.getElementById("whatsapp").href =
     "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
-function pagarMP(){
-  window.open("https://link.mercadopago.cl/torresice","_blank");
-}
-
-function openTransfer(){
-  document.getElementById("transfer").style.display="flex";
-  document.body.style.overflow="hidden";
-}
-
-function closeTransfer(){
-  document.getElementById("transfer").style.display="none";
-  document.body.style.overflow="auto";
-}
-
-// 🔔 Aviso instalar app
-window.addEventListener('beforeinstallprompt', (e) => {
+/* 🟦 AVISO INSTALAR APP */
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  if (!localStorage.getItem('installDismissed')) {
-    document.getElementById('installBanner').style.display = 'block';
+
+  if (!localStorage.getItem("installDismissed")) {
+    document.getElementById("installBanner").style.display = "block";
   }
 });
 
-document.getElementById('installBtn').onclick = async () => {
-  if (deferredPrompt) {
+window.addEventListener("load", () => {
+  document.getElementById("installBtn").onclick = async () => {
+    if (!deferredPrompt) {
+      alert("Usa el menú del navegador para instalar la App 📲");
+      return;
+    }
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
     deferredPrompt = null;
-    document.getElementById('installBanner').style.display = 'none';
-  }
-};
+    document.getElementById("installBanner").style.display = "none";
+  };
 
-document.getElementById('closeInstall').onclick = () => {
-  document.getElementById('installBanner').style.display = 'none';
-  localStorage.setItem('installDismissed', 'yes');
-};
+  document.getElementById("closeInstall").onclick = () => {
+    document.getElementById("installBanner").style.display = "none";
+    localStorage.setItem("installDismissed", "yes");
+  };
+});
 
-// 🔹 Service Worker
+/* 🟦 SERVICE WORKER */
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js");
@@ -331,8 +293,8 @@ if ("serviceWorker" in navigator) {
 }
 
 updateAll();
-  
 </script>
+
 <div id="installBanner"
 style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
 background:#0b5ed7; color:white; padding:15px 20px; border-radius:12px;
