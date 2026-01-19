@@ -218,9 +218,20 @@ input, select{
 <input id="phone" placeholder="Celular">
 <input id="address" placeholder="Dirección">
 
-<p>Subtotal: $<span id="subtotal">500</span></p>
-<p>Delivery: $<span id="delivery">0</span></p>
-<h3>Total: $<span id="total">500</span></h3>
+<div class="summary">
+  <div class="row">
+    <span>Subtotal</span>
+    <span>$<span id="subtotal">500</span></span>
+  </div>
+  <div class="row">
+    <span>Delivery</span>
+    <span>$<span id="delivery">0</span></span>
+  </div>
+  <div class="row total">
+    <span>Total</span>
+    <span>$<span id="total">500</span></span>
+  </div>
+</div>
 
 <button class="btn mp" onclick="pagarMP()">💳 Mercado Pago</button>
 <button class="btn tr" onclick="openTransfer()">🏦 Transferencia</button>
