@@ -31,34 +31,18 @@ header{
 
 header img{
   width:90px;
-  margin-bottom:6px;
-}
-
-header h1{
-  margin:4px 0;
-  font-size:20px;
-}
-
-header small{
-  display:block;
-  font-size:13px;
 }
 
 .card{
-  background:rgba(255,255,255,0.9);
+  background:#fff;
   border-radius:16px;
   padding:16px;
   text-align:center;
 }
 
-h2,h3,p{
-  margin:6px 0;
-}
-
 .qty{
   display:flex;
   justify-content:center;
-  align-items:center;
   gap:12px;
   margin:12px 0;
 }
@@ -69,26 +53,12 @@ h2,h3,p{
   font-size:20px;
 }
 
-.qty input{
-  width:60px;
-  text-align:center;
-}
-
 input, select{
   width:100%;
   padding:10px;
   margin-top:8px;
   border-radius:8px;
   border:1px solid #ccc;
-}
-
-.summary{
-  margin-top:14px;
-  text-align:center;
-}
-
-.summary p{
-  margin:4px 0;
 }
 
 .btn{
@@ -101,27 +71,10 @@ input, select{
   cursor:pointer;
 }
 
-.mp{
-  background:#FFD400;
-  color:#0056A3;
-  font-weight:bold;
-}
-
-.tr{
-  background:#0072CE;
-  color:#fff;
-}
-
-.wa{
-  background:#25D366;
-  color:#003366;
-  font-weight:bold;
-}
-
-.call{
-  background:#0288D1;
-  color:#fff;
-}
+.mp{ background:#FFD400; font-weight:bold; }
+.tr{ background:#0072CE; color:white; }
+.wa{ background:#25D366; font-weight:bold; }
+.call{ background:#0288D1; color:white; }
 
 .modal{
   display:none;
@@ -134,11 +87,28 @@ input, select{
 }
 
 .modal-box{
-  background:#fff;
+  background:white;
   padding:20px;
   border-radius:14px;
   width:90%;
   max-width:360px;
+  text-align:center;
+}
+
+/* 📲 Banner instalar */
+#installBanner{
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#0b5ed7;
+  color:white;
+  padding:15px 20px;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+  max-width:90%;
+  z-index:9999;
   text-align:center;
 }
 </style>
@@ -147,186 +117,124 @@ input, select{
 <body>
 
 <div class="app">
-
 <header>
-  <img src="logo.png" alt="Torres Ice">
-  <h1>Venta de Hielo · Copiapó</h1>
-  <small>🕘 09:00 a 22:00 · 🚚 Delivery disponible</small>
+  <img src="logo.png">
+  <h2>Venta de Hielo · Copiapó</h2>
+  <small>🚚 Delivery disponible</small>
 </header>
 
 <div class="card">
-
-<h2>Bolsa de Hielo</h2>
-<h3>Formato 1 Kg</h3>
-<h3>$500</h3>
+<h3>Bolsa de Hielo 1 Kg</h3>
+<h2>$500</h2>
 
 <div class="qty">
   <button onclick="changeQty(-1)">−</button>
-  <input id="qty" type="number" value="1" readonly>
+  <input id="qty" value="1" readonly>
   <button onclick="changeQty(1)">+</button>
 </div>
 
-<p><strong>Zona de entrega</strong></p>
 <select id="zone" onchange="updateAll()">
-  <option value="retiro">Retira Cliente – $0</option>
-  <option value="centro">Copiapó Centro – $1.000 (+10 bolsas $0)</option>
-  <option value="alrededores">Copiapó Alrededores – $1.200 (+10 bolsas $0)</option>
-  <option value="paipote">Paipote Los Llanos – $1.500 (+15 bolsas $0)</option>
-  <option value="tierra">Tierra Amarilla – $2.000 (+20 bolsas $0)</option>
+  <option value="retiro">Retiro – $0</option>
+  <option value="centro">Centro – $1.000 (+10 $0)</option>
+  <option value="alrededores">Alrededores – $1.200 (+10 $0)</option>
+  <option value="paipote">Paipote – $1.500 (+15 $0)</option>
+  <option value="tierra">Tierra Amarilla – $2.000 (+20 $0)</option>
 </select>
 
-<input id="customerName" placeholder="Nombre del Cliente" oninput="updateAll()">
-<input id="phone" placeholder="Celular" oninput="updateAll()">
-<input id="address" placeholder="Dirección" oninput="updateAll()">
-<input id="email" placeholder="E-mail" oninput="updateAll()">
+<input id="customerName" placeholder="Nombre">
+<input id="phone" placeholder="Celular">
+<input id="address" placeholder="Dirección">
 
-<div class="summary">
-  <p>Subtotal : $<span id="subtotal">500</span></p>
-  <p>Delivery : $<span id="delivery">0</span></p>
-  <p><strong>Total : $<span id="total">500</span></strong></p>
-</div>
+<p>Subtotal: $<span id="subtotal">500</span></p>
+<p>Delivery: $<span id="delivery">0</span></p>
+<h3>Total: $<span id="total">500</span></h3>
 
 <button class="btn mp" onclick="pagarMP()">💳 Mercado Pago</button>
 <button class="btn tr" onclick="openTransfer()">🏦 Transferencia</button>
 
-<a id="whatsapp" class="btn wa" target="_blank">
-📲 WhatsApp - Envío comprobante
-</a>
-
-<button class="btn call" onclick="location.href='tel:+56927731874'">
-📞 Llamar Ahora
-</button>
-
+<a id="whatsapp" class="btn wa" target="_blank">📲 WhatsApp Pedido</a>
+<button class="btn call" onclick="location.href='tel:+56927731874'">📞 Llamar</button>
 </div>
 </div>
 
-<div id="transfer" class="modal" style="display:none"
-onclick="if(event.target.id==='transfer')closeTransfer()">
+<!-- Modal transferencia -->
+<div id="transfer" class="modal" onclick="if(event.target.id==='transfer')closeTransfer()">
   <div class="modal-box">
-    <h3>Datos para Transferir</h3>
-    <p>Banco: Coopeuch</p>
-    <p>Cuenta Vista: 251105735</p>
-    <p>RUT: 12.218.473-0</p>
-    <p>Oscar Torres López</p>
-    <p>Email: hielo.torres.ice@gmail.com</p>
+    <h3>Transferencia</h3>
+    <p>Banco Coopeuch</p>
+    <p>Cuenta Vista 251105735</p>
+    <p>Oscar Torres</p>
     <button class="btn tr" onclick="closeTransfer()">Cerrar</button>
+  </div>
+</div>
+
+<!-- 📲 Banner instalar -->
+<div id="installBanner">
+  <strong>📲 Instala nuestra App</strong><br>
+  Acceso rápido y sin navegador
+  <div style="margin-top:10px;">
+    <button id="installBtn" class="btn mp">Cómo instalar</button>
+    <button id="closeInstall" style="background:none;border:none;color:white;font-size:18px">✕</button>
   </div>
 </div>
 
 <script>
 const price = 500;
-let deferredPrompt;
 
-/* 🟦 AVISO INSTALAR APP */
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  if (!localStorage.getItem("installDismissed")) {
-    document.getElementById("installBanner").style.display = "block";
-  }
-});
-
-/* ✅ CUANDO LA APP SE INSTALA */
-window.addEventListener("appinstalled", () => {
-  localStorage.setItem("installDismissed", "yes");
-  document.getElementById("installBanner").style.display = "none";
-});
-  
 function changeQty(v){
-  const q = document.getElementById("qty");
-  q.value = Math.max(1, parseInt(q.value) + v);
+  qty.value = Math.max(1, parseInt(qty.value) + v);
   updateAll();
 }
 
-function deliveryCost(q, z){
-  if (z === "retiro") return 0;
-  if (z === "centro") return q >= 10 ? 0 : 1000;
-  if (z === "alrededores") return q >= 10 ? 0 : 1200;
-  if (z === "paipote") return q >= 15 ? 0 : 1500;
-  if (z === "tierra") return q >= 20 ? 0 : 2000;
+function deliveryCost(q,z){
+  if(z==="centro") return q>=10?0:1000;
+  if(z==="alrededores") return q>=10?0:1200;
+  if(z==="paipote") return q>=15?0:1500;
+  if(z==="tierra") return q>=20?0:2000;
   return 0;
 }
 
 function updateAll(){
-  const q = parseInt(document.getElementById("qty").value, 10);
-  const z = document.getElementById("zone").value;
+  const q = +qty.value;
+  const d = deliveryCost(q, zone.value);
+  subtotal.innerText = q * price;
+  delivery.innerText = d;
+  total.innerText = q * price + d;
 
-  const sub = q * price;
-  const del = deliveryCost(q,z);
-  const tot = sub + del;
-
-  document.getElementById("subtotal").innerText = sub;
-  document.getElementById("delivery").innerText = del;
-  document.getElementById("total").innerText = tot;
-
-  const msg = `
-Hola, quiero pedir hielo Torres Ice ❄️
-
-Cantidad: ${q} bolsas
-Subtotal: $${sub}
-Delivery: $${del}
-Total: $${tot}
-`;
-
-  document.getElementById("whatsapp").href =
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
+  whatsapp.href =
+   "https://wa.me/56927731874?text=" +
+   encodeURIComponent(`Pedido hielo\nCantidad: ${q}\nTotal: $${q*price+d}`);
 }
 
-window.addEventListener("load", () => {
-  document.getElementById("installBtn").onclick = async () => {
-    if (!deferredPrompt) {
-      alert("Usa el menú del navegador para instalar la App 📲");
-      return;
-    }
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    document.getElementById("installBanner").style.display = "none";
-  };
-
-  document.getElementById("closeInstall").onclick = () => {
-    document.getElementById("installBanner").style.display = "none";
-    localStorage.setItem("installDismissed", "yes");
-  };
-});
-
-/* 🟦 SERVICE WORKER */
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js");
-  });
+function pagarMP(){
+  window.open("https://link.mercadopago.cl/torresice","_blank");
 }
+
+function openTransfer(){ transfer.style.display="flex"; }
+function closeTransfer(){ transfer.style.display="none"; }
+
+/* 📲 Banner instalar manual (estable) */
+window.onload = () => {
+  if(!localStorage.getItem("installDismissed")){
+    installBanner.style.display="block";
+  }
+};
+
+installBtn.onclick = () => {
+  alert(
+    "Para instalar:\n\n" +
+    "1️⃣ Toca los 3 puntos (⋮)\n" +
+    "2️⃣ Agregar a pantalla de inicio"
+  );
+};
+
+closeInstall.onclick = () => {
+  installBanner.style.display="none";
+  localStorage.setItem("installDismissed","yes");
+};
 
 updateAll();
 </script>
 
-<div id="installBanner"
-style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-background:#0b5ed7; color:white; padding:15px 20px; border-radius:12px;
-box-shadow:0 8px 20px rgba(0,0,0,.3);
-max-width:90%; z-index:9999; text-align:center;">
-
-  <strong>📲 Instala nuestra App</strong><br>
-  Pide tu hielo más rápido ❄️
-
-  <div style="margin-top:10px;">
-    <button id="installBtn"
-      style="background:#ffc107; border:none; padding:8px 14px;
-      border-radius:8px; font-weight:bold; cursor:pointer;">
-      Instalar App
-    </button>
-
-    <button id="closeInstall"
-      style="margin-left:10px; background:transparent; color:white;
-      border:none; font-size:18px; cursor:pointer;">
-      ✕
-    </button>
-  </div>
-</div>
-
 </body>
-
-</div>
-  
 </html>
