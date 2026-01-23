@@ -305,14 +305,35 @@ function deliveryCost(q,z){
 
 function updateAll(){
   const q = +qty.value;
-  const d = deliveryCost(q, zone.value);
-  subtotal.innerText = q * price;
+  const z = zone.value;
+
+  const name = customerName.value || "No informado";
+  const phone = phone.value || "No informado";
+  const address = address.value || "No informada";
+
+  const d = deliveryCost(q, z);
+  const sub = q * price;
+  const tot = sub + d;
+
+  subtotal.innerText = sub;
   delivery.innerText = d;
-  total.innerText = q * price + d;
+  total.innerText = tot;
+
+  const msg = `
+🧊 *Pedido Hielo – Torres Ice*
+
+👤 Cliente: ${name}
+📞 Celular: ${phone}
+📍 Dirección: ${address}
+
+📦 Cantidad: ${q} bolsas
+💰 Subtotal: $${sub}
+🚚 Delivery: $${d}
+🧾 Total: $${tot}
+`;
 
   whatsapp.href =
-   "https://wa.me/56927731874?text=" +
-   encodeURIComponent(`Pedido hielo\nCantidad: ${q}\nTotal: $${q*price+d}`);
+    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
 }
 
 function pagarMP(){
