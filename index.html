@@ -233,11 +233,11 @@ input, select{
 </div>
 
 <select id="zone" onchange="updateAll()">
-  <option value="retiro">Retiro – $0</option>
-  <option value="centro">Centro – $1.000 (+10 $0)</option>
-  <option value="alrededores">Alrededores – $1.200 (+10 $0)</option>
-  <option value="paipote">Paipote – $1.500 (+15 $0)</option>
-  <option value="tierra">Tierra Amarilla – $2.000 (+20 $0)</option>
+  <option value="retiro" data-cost="0" data-free="0">Retiro – $0</option>
+  <option value="centro" data-cost="1000" data-free="10">Centro – $1.000 (+10 Bolsas Costo $0)</option>
+  <option value="alrededores" data-cost="1200" data-free="10">Alrededores – $1.200 (+10 Bolsas Costo $0)</option>
+  <option value="paipote" data-cost="1500" data-free="15">Paipote – $1.500 (+15 Bolsas Costo $0)</option>
+  <option value="tierra" data-cost="2000" data-free="20">Tierra Amarilla – $2.000 (+20 Bolsas Costo $0)</option>
 </select>
 
 <input id="customerName" placeholder="Nombre">
