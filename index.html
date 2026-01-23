@@ -296,12 +296,13 @@ function changeQty(v){
   updateAll();
 }
 
-function deliveryCost(q,z){
-  if(z==="centro") return q>=10?0:1000;
-  if(z==="alrededores") return q>=10?0:1200;
-  if(z==="paipote") return q>=15?0:1500;
-  if(z==="tierra") return q>=20?0:2000;
-  return 0;
+function deliveryCost(q){
+  const opt = zone.options[zone.selectedIndex];
+  const cost = parseInt(opt.dataset.cost);
+  const free = parseInt(opt.dataset.free);
+
+  if(q >= free) return 0;
+  return cost;
 }
 
 function updateAll(){
