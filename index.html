@@ -4,112 +4,119 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Torres Ice - Venta de Hielo</title>
-
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00aaff">
-
 <style>
 body{
   margin:0;
   font-family:Arial, sans-serif;
   background:url("fondo-hielo.png") center/cover no-repeat fixed;
 }
-
 .app{
   max-width:420px;
   margin:auto;
   min-height:100vh;
-  background:rgba(255,255,255,0.78);
-  backdrop-filter:blur(4px);
-  padding:16px;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(6px);
+  padding:20px;
+  box-shadow:0 0 20px rgba(0,0,0,0.1);
+  border-radius:16px;
 }
-
 header{
   text-align:center;
   margin-bottom:20px;
 }
-
 header img{
   width:120px;
   margin:10px auto 12px;
   display:block;
 }
-
 header h1{
   margin:6px 0;
-  font-size:22px;
+  font-size:24px;
   font-weight:700;
+  color:#0072CE;
 }
-
 header small{
   display:block;
   font-size:14px;
-  opacity:0.85;
+  opacity:0.9;
 }
-
 .card{
   background:#fff;
   border-radius:16px;
-  padding:16px;
+  padding:20px;
   text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
-
 .qty{
   display:flex;
   justify-content:center;
+  align-items:center;
   gap:12px;
-  margin:12px 0;
+  margin:16px 0;
 }
-
 .qty button{
-  width:36px;
-  height:36px;
-  font-size:20px;
+  width:42px;
+  height:42px;
+  font-size:22px;
+  border-radius:12px;
+  background:#f2f2f2;
+  border:1px solid #bbb;
+  transition:0.2s;
 }
-
+.qty button:hover{ background:#e0e0e0; }
+.qty input{
+  width:60px;
+  height:42px;
+  font-size:18px;
+  font-weight:bold;
+  text-align:center;
+  border-radius:12px;
+  border:1px solid #bbb;
+  padding:0;
+}
 input, select{
   width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:8px;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
   border:1px solid #ccc;
+  font-size:15px;
 }
-
 .btn{
   width:100%;
   padding:14px;
   border:none;
-  border-radius:12px;
+  border-radius:16px;
   font-size:16px;
-  margin-top:10px;
+  margin-top:12px;
   cursor:pointer;
+  transition:0.2s;
 }
-
+.btn:hover{ opacity:0.9; }
 .mp{ background:#FFD400; font-weight:bold; }
 .tr{ background:#0072CE; color:white; }
 .wa{ background:#25D366; font-weight:bold; }
 .call{ background:#0288D1; color:white; }
-
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.5);
   align-items:center;
   justify-content:center;
   z-index:999;
 }
-
 .modal-box{
   background:white;
-  padding:20px;
-  border-radius:14px;
+  padding:24px;
+  border-radius:16px;
   width:90%;
-  max-width:360px;
+  max-width:380px;
   text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
 }
-
-/* 📲 Banner instalar */
 #installBanner{
   display:none;
   position:fixed;
@@ -118,155 +125,90 @@ input, select{
   transform:translateX(-50%);
   background:#0b5ed7;
   color:white;
-  padding:15px 20px;
-  border-radius:14px;
+  padding:18px 22px;
+  border-radius:16px;
   box-shadow:0 8px 20px rgba(0,0,0,.3);
   max-width:90%;
   z-index:99999;
-}
-
-/* ➕➖ CONTADOR CANTIDAD (AFINADO) */
-.qty{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin:14px 0;
-}
-
-.qty button{
-  width:40px;
-  height:40px;
-  font-size:22px;
-  border-radius:8px;
-  background:#f2f2f2;
-  border:1px solid #bbb;
-}
-
-.qty input{
-  width:60px;
-  height:40px;
-  font-size:18px;
-  font-weight:bold;
   text-align:center;
-  line-height:40px;
-  border-radius:8px;
-  border:1px solid #bbb;
-  padding:0;
 }
-
-/* 🧼 ESPACIADO GENERAL */
-.card{
-  padding: 20px;
-}
-
-/* 🧾 DESGLOSE PRECIOS */
 .summary{
-  margin-top:16px;
+  margin-top:18px;
   font-size:18px;
+  background:#f9f9f9;
+  border-radius:12px;
+  padding:12px;
 }
-
 .summary .row{
   display:flex;
   justify-content:space-between;
-  padding:4px 6px;
+  padding:6px 0;
 }
-
 .summary .row span:last-child{
   font-weight:bold;
 }
-
 .summary .total{
-  font-size:18px;
+  font-size:20px;
   border-top:1px solid #ddd;
   margin-top:6px;
   padding-top:8px;
 }
-
-/* 🧊 PRODUCTO */
-.product{
-  margin-bottom:12px;
-}
-
 .product h2{
   margin:0;
-  font-size:22px;
+  font-size:24px;
 }
-
 .product .format{
   margin-top:4px;
-  font-size:15px;
+  font-size:16px;
   font-weight:bold;
   color:#333;
 }
-
 .product .price{
-  margin-top:10px;
-  font-size:26px;
+  margin-top:12px;
+  font-size:28px;
   font-weight:bold;
+  color:#0072CE;
 }
-
 </style>
 </head>
-
 <body>
-
 <div class="app">
 <header>
   <img src="logo.png" alt="Torres Ice">
   <h1>Venta de Hielo · Copiapó</h1>
   <small>🕘 09:00 a 22:00 · 🚚 Delivery disponible</small>
 </header>
-
 <div class="card">
-
   <div class="product">
     <h2>Bolsa de Hielo</h2>
     <p class="format">Formato 1 Kg</p>
     <div class="price">$500</div>
   </div>
-
-<div class="qty">
-  <button onclick="changeQty(-1)">−</button>
-  <input id="qty" value="1" readonly>
-  <button onclick="changeQty(1)">+</button>
+  <div class="qty">
+    <button onclick="changeQty(-1)">−</button>
+    <input id="qty" value="1" readonly>
+    <button onclick="changeQty(1)">+</button>
+  </div>
+  <select id="zone" onchange="updateAll()">
+    <option value="retiro" data-cost="0" data-free="0">Retiro – $0</option>
+    <option value="centro" data-cost="1000" data-free="10">Centro – $1.000 (+10 Bolsas Costo $0)</option>
+    <option value="alrededores" data-cost="1200" data-free="10">Alrededores – $1.200 (+10 Bolsas Costo $0)</option>
+    <option value="paipote" data-cost="1500" data-free="15">Paipote – $1.500 (+15 Bolsas Costo $0)</option>
+    <option value="tierra" data-cost="2000" data-free="20">Tierra Amarilla – $2.000 (+20 Bolsas Costo $0)</option>
+  </select>
+  <input id="customerName" placeholder="Nombre">
+  <input id="phone" placeholder="Celular">
+  <input id="address" placeholder="Dirección">
+  <div class="summary">
+    <div class="row"><span>Subtotal</span><span>$<span id="subtotal">500</span></span></div>
+    <div class="row"><span>Delivery</span><span>$<span id="delivery">0</span></span></div>
+    <div class="row total"><span>Total</span><span>$<span id="total">500</span></span></div>
+  </div>
+  <button class="btn mp" onclick="pagarMP()">💳 Mercado Pago</button>
+  <button class="btn tr" onclick="openTransfer()">🏦 Transferencia</button>
+  <a id="whatsapp" class="btn wa" target="_blank">📲 WhatsApp Pedido</a>
+  <button class="btn call" onclick="location.href='tel:+56927731874'">📞 Llamar</button>
 </div>
-
-<select id="zone" onchange="updateAll()">
-  <option value="retiro" data-cost="0" data-free="0">Retiro – $0</option>
-  <option value="centro" data-cost="1000" data-free="10">Centro – $1.000 (+10 Bolsas Costo $0)</option>
-  <option value="alrededores" data-cost="1200" data-free="10">Alrededores – $1.200 (+10 Bolsas Costo $0)</option>
-  <option value="paipote" data-cost="1500" data-free="15">Paipote – $1.500 (+15 Bolsas Costo $0)</option>
-  <option value="tierra" data-cost="2000" data-free="20">Tierra Amarilla – $2.000 (+20 Bolsas Costo $0)</option>
-</select>
-
-<input id="customerName" placeholder="Nombre">
-<input id="phone" placeholder="Celular">
-<input id="address" placeholder="Dirección">
-
-<div class="summary">
-  <div class="row">
-    <span>Subtotal</span>
-    <span>$<span id="subtotal">500</span></span>
-  </div>
-  <div class="row">
-    <span>Delivery</span>
-    <span>$<span id="delivery">0</span></span>
-  </div>
-  <div class="row total">
-    <span>Total</span>
-    <span>$<span id="total">500</span></span>
-  </div>
-</div>
-  
-<button class="btn mp" onclick="pagarMP()">💳 Mercado Pago</button>
-<button class="btn tr" onclick="openTransfer()">🏦 Transferencia</button>
-
-<a id="whatsapp" class="btn wa" target="_blank">📲 WhatsApp Pedido</a>
-<button class="btn call" onclick="location.href='tel:+56927731874'">📞 Llamar</button>
-</div> <!-- cierre card -->
-
-<!-- Modal transferencia -->
 <div id="transfer" class="modal" onclick="if(event.target.id==='transfer')closeTransfer()">
   <div class="modal-box">
     <h3>Transferencia</h3>
@@ -277,8 +219,6 @@ input, select{
     <button class="btn tr" onclick="closeTransfer()">Cerrar</button>
   </div>
 </div>
-
-<!-- 📲 Banner instalar -->
 <div id="installBanner">
   <strong>📲 Instala nuestra App</strong><br>
   Acceso rápido y sin navegador
@@ -287,85 +227,31 @@ input, select{
     <button id="closeInstall" style="background:none;border:none;color:white;font-size:18px">✕</button>
   </div>
 </div>
-
 <script>
-const price = 500;
-
-function changeQty(v){
-  qty.value = Math.max(1, parseInt(qty.value) + v);
-  updateAll();
-}
-
-function deliveryCost(q){
-  const opt = zone.options[zone.selectedIndex];
-  const cost = parseInt(opt.dataset.cost);
-  const free = parseInt(opt.dataset.free);
-
-  if(q >= free) return 0;
-  return cost;
-}
-
-function updateAll(){
-  const q = +qty.value;
-  const z = zone.value;
-
-  const name = customerName.value || "No informado";
-  const phone = phone.value || "No informado";
-  const address = address.value || "No informada";
-
-  const d = deliveryCost(q);
-  const sub = q * price;
-  const tot = sub + d;
-
-  subtotal.innerText = sub;
-  delivery.innerText = d;
-  total.innerText = tot;
-
-  const msg = `
-🧊 *Pedido Hielo – Torres Ice*
-
-👤 Cliente: ${name}
-📞 Celular: ${phone}
-📍 Dirección: ${address}
-
-📦 Cantidad: ${q} bolsas
-💰 Subtotal: $${sub}
-🚚 Delivery: $${d}
-🧾 Total: $${tot}
-`;
-
-  whatsapp.href =
-    "https://wa.me/56927731874?text=" + encodeURIComponent(msg);
-}
-
-function pagarMP(){
-  window.open("https://link.mercadopago.cl/torresice","_blank");
-}
-
-function openTransfer(){ transfer.style.display="flex"; }
-function closeTransfer(){ transfer.style.display="none"; }
-
-window.onload = () => {
-  if(!localStorage.getItem("installDismissed")){
-    installBanner.style.display="block";
-  }
-};
-
-installBtn.onclick = () => {
-  alert(
-    "Para instalar:\n\n" +
-    "1️⃣ Toca los 3 puntos (⋮)\n" +
-    "2️⃣ Agregar a pantalla de inicio"
-  );
-};
-
-closeInstall.onclick = () => {
-  installBanner.style.display="none";
-  localStorage.setItem("installDismissed","yes");
-};
-
+const price=500;
+const qty=document.getElementById('qty');
+const zone=document.getElementById('zone');
+const customerName=document.getElementById('customerName');
+const phone=document.getElementById('phone');
+const address=document.getElementById('address');
+const subtotal=document.getElementById('subtotal');
+const delivery=document.getElementById('delivery');
+const total=document.getElementById('total');
+const whatsapp=document.getElementById('whatsapp');
+const installBanner=document.getElementById('installBanner');
+const installBtn=document.getElementById('installBtn');
+const closeInstall=document.getElementById('closeInstall');
+const transfer=document.getElementById('transfer');
+function changeQty(v){qty.value=Math.max(1,parseInt(qty.value)+v);updateAll();}
+function deliveryCost(q){const opt=zone.options[zone.selectedIndex];const cost=parseInt(opt.dataset.cost);const free=parseInt(opt.dataset.free);return q>=free?0:cost;}
+function updateAll(){const q=+qty.value;const name=customerName.value||"No informado";const ph=phone.value||"No informado";const addr=address.value||"No informada";const d=deliveryCost(q);const sub=q*price;const tot=sub+d;subtotal.innerText=sub;delivery.innerText=d;total.innerText=tot;const msg=`🧊 *Pedido Hielo – Torres Ice*\n\n👤 Cliente: ${name}\n📞 Celular: ${ph}\n📍 Dirección: ${addr}\n\n📦 Cantidad: ${q} bolsas\n💰 Subtotal: $${sub}\n🚚 Delivery: $${d}\n🧾 Total: $${tot}`;whatsapp.href="https://wa.me/56927731874?text="+encodeURIComponent(msg);}
+function pagarMP(){window.open("https://link.mercadopago.cl/torresice","_blank");}
+function openTransfer(){transfer.style.display="flex";}
+function closeTransfer(){transfer.style.display="none";}
+window.onload=()=>{if(!localStorage.getItem("installDismissed"))installBanner.style.display="block";};
+installBtn.onclick=()=>{alert("Para instalar:\n\n1️⃣ Toca los 3 puntos (⋮)\n2️⃣ Agregar a pantalla de inicio");};
+closeInstall.onclick=()=>{installBanner.style.display="none";localStorage.setItem("installDismissed","yes");};
 updateAll();
 </script>
-
 </body>
 </html>
